@@ -37,7 +37,7 @@ const useRiffs = (): RiffsHook => {
 
   return {
     actions: { deleteRiff, createRiff, addRiffRating },
-    selectors: { data: data.sort((a, b) => (a.getAverageRating() < b.getAverageRating() ? 1 : -1)), isError, isLoading },
+    selectors: { data, isError, isLoading },
   };
 };
 

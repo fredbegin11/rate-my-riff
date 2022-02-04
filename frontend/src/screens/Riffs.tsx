@@ -23,6 +23,7 @@ const renderAverageRating = (riff: Riff) => (
     />
   </div>
 );
+
 const renderMyRating = (riff: Riff, onClick: (id: string, rating: number) => void) => (
   <Rating
     initialRating={riff.getMyRating()}

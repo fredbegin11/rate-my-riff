@@ -9,10 +9,6 @@ class AuthClient {
     return auth.signOut();
   };
 
-  getToken = () => {
-    return auth.currentUser?.getIdToken();
-  };
-
   getCurrentUser = () => {
     return auth.currentUser;
   };
