@@ -14,7 +14,7 @@ const Login = () => {
     try {
       await AuthClient.loginUser(values.email, values.password);
       navigate('/riffs');
-    } catch (err: any) {
+    } catch (err) {
       setError('Ça marche pas');
     } finally {
       setIsLoading(false);

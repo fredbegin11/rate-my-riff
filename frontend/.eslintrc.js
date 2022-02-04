@@ -30,5 +30,11 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
     'object-curly-newline': 'off',
+    '@typescript-eslint/lines-between-class-members': 'off',
+    'react/require-default-props': 'off',
+    'no-restricted-syntax': 'off',
+    'no-await-in-loop': 'off',
+    'jsx-a11y/media-has-caption': 'off',
+    'operator-linebreak': 'off',
   },
 };

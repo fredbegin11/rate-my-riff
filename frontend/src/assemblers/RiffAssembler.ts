@@ -1,0 +1,37 @@
+import { v4 as uuidv4 } from 'uuid';
+import { CreateRiffFormProps } from '../components/riffs/CreateRiffForm';
+import RiffDto from '../dtos/RiffDto';
+import Riff from '../models/Riff';
+import AuthClient from '../services/AuthClient';
+
+class RiffAssembler {
+  fromForm({ file, name }: CreateRiffFormProps) {
+    const fileName = file[0].name;
+
+    return new Riff({
+      id: uuidv4(),
+      name,
+      rating: '',
+      author: AuthClient.getCurrentUser()?.displayName || '',
+      creationDate: Date.now(),
+      fileName,
+    });
+  }
+
+  fromDto(dto: RiffDto) {
+    return new Riff(dto);
+  }
+
+  toObject(riff: Riff) {
+    return {
+      id: riff.id,
+      name: riff.name,
+      rating: riff.rating,
+      author: riff.author,
+      creationDate: riff.creationDate,
+      fileName: riff.fileName,
+    };
+  }
+}
+
+export default new RiffAssembler();

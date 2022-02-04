@@ -1,10 +1,24 @@
-import axios from 'axios';
-import AuthClient from './AuthClient';
+import RiffAssembler from '../assemblers/RiffAssembler';
+import { CreateRiffFormProps } from '../components/riffs/CreateRiffForm';
+import RiffDto from '../dtos/RiffDto';
+import Riff from '../models/Riff';
+import PersistenceClient from './PersistenceClient';
 
 class RiffClient {
   getRiffs = async () => {
-    const token = await AuthClient.getToken();
-    return axios.get(`http://${process.env.REACT_APP_API_URL}/riffs`, { headers: { authorization: `Bearer ${token}` } });
+    const riffsObject: RiffDto[] = await PersistenceClient.getData('riffs');
+    const riffs: Riff[] = Object.values(riffsObject).map(RiffAssembler.fromDto);
+
+    return riffs;
+  };
+
+  createRiff = async (form: CreateRiffFormProps) => {
+    const riff = RiffAssembler.fromForm(form);
+    await PersistenceClient.writeData(`riffs/${riff.id}`, RiffAssembler.toObject(riff));
+  };
+
+  deleteRiff = async (id: string) => {
+    await PersistenceClient.deleteData(`riffs/${id}`);
   };
 }
 
