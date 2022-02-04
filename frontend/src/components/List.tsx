@@ -1,3 +1,4 @@
+import { ArrowDownIcon } from '@heroicons/react/outline';
 import ListLoading from './ListLoading';
 
 interface Key {
@@ -16,9 +17,10 @@ interface Props {
   data: unknown[];
   isLoading: boolean;
   actions?: Action[];
+  sortedBy?: string;
 }
 
-export default function List({ isLoading, data = [], keys, actions = [] }: Props) {
+export default function List({ isLoading, data = [], keys, actions = [], sortedBy = 'averageRating' }: Props) {
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -29,7 +31,8 @@ export default function List({ isLoading, data = [], keys, actions = [] }: Props
                 <tr>
                   {keys.map((key: Key) => (
                     <th key={key.name} scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      {key.label}
+                      <span>{key.label}</span>
+                      <span>{sortedBy === key.name && <ArrowDownIcon className="inline ml-2 -mt-1" width={15} />}</span>
                     </th>
                   ))}
                   {actions.length > 0 && (

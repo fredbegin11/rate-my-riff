@@ -25,7 +25,6 @@ const renderAverageRating = (riff: Riff) => (
 );
 const renderMyRating = (riff: Riff, onClick: (id: string, rating: number) => void) => (
   <Rating
-    fractions={2}
     initialRating={riff.getMyRating()}
     emptySymbol={<img width={35} alt="empty" src={ratingEmpty} />}
     fullSymbol={<img width={35} alt="full" src={ratingFull} />}
@@ -73,8 +72,8 @@ const Riffs = () => {
               transformer: (riff: Riff) => (riff.creationDate ? format(riff.creationDate, 'yyyy/MM/dd') : '-'),
             },
             { name: 'author', label: 'Auteur' },
-            { name: 'rating', label: 'Note Moyenne', transformer: (riff: Riff) => renderAverageRating(riff) },
-            { name: 'rating', label: 'Ma Note', transformer: (riff: Riff) => renderMyRating(riff, addRiffRating) },
+            { name: 'averageRating', label: 'Note Moyenne', transformer: (riff: Riff) => renderAverageRating(riff) },
+            { name: 'myRating', label: 'Ma Note', transformer: (riff: Riff) => renderMyRating(riff, addRiffRating) },
           ]}
           actions={[{ label: 'Supprimer', onClick: (id: string) => setItemToDelete(id) }]}
         />

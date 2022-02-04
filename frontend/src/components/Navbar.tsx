@@ -9,11 +9,7 @@ import AuthClient from '../services/AuthClient';
 export default function Navbar() {
   const { pathname } = useLocation();
 
-  const navigation = [
-    { name: 'Riffs', to: '/riffs', current: pathname === '/riffs' },
-    { name: 'Paroles', to: '/lyrics', current: pathname === '/lyrics' },
-    { name: 'Drums', to: '/lyrics', current: pathname === '/drums' },
-  ];
+  const navigation = [{ name: 'Riffs', to: '/riffs', current: pathname === '/riffs' }];
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
