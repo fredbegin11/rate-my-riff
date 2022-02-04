@@ -7,6 +7,7 @@ interface RiffsHook {
   actions: {
     deleteRiff: (id: string) => void;
     createRiff: (form: CreateRiffFormProps) => void;
+    addRiffRating: (id: string, rating: number) => void;
   };
   selectors: {
     data: Riff[];
@@ -29,8 +30,13 @@ const useRiffs = (): RiffsHook => {
     queryClient.invalidateQueries('riffs');
   };
 
+  const addRiffRating = async (id: string, rating: number) => {
+    await RiffsClient.addRating(id, rating);
+    queryClient.invalidateQueries('riffs');
+  };
+
   return {
-    actions: { deleteRiff, createRiff },
+    actions: { deleteRiff, createRiff, addRiffRating },
     selectors: { data, isError, isLoading },
   };
 };

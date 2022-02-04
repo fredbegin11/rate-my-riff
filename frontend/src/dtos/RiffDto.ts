@@ -1,7 +1,9 @@
+import RatingDto from './RatingDto';
+
 interface RiffDto {
   id: string;
   name: string;
-  rating: string;
+  ratings: RatingDto;
   author: string;
   creationDate: number;
   fileName: string;

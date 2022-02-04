@@ -2,6 +2,7 @@ import RiffAssembler from '../assemblers/RiffAssembler';
 import { CreateRiffFormProps } from '../components/riffs/CreateRiffForm';
 import RiffDto from '../dtos/RiffDto';
 import Riff from '../models/Riff';
+import AuthClient from './AuthClient';
 import PersistenceClient from './PersistenceClient';
 
 class RiffClient {
@@ -17,8 +18,10 @@ class RiffClient {
     await PersistenceClient.writeData(`riffs/${riff.id}`, RiffAssembler.toObject(riff));
   };
 
-  deleteRiff = async (id: string) => {
-    await PersistenceClient.deleteData(`riffs/${id}`);
+  deleteRiff = (id: string) => PersistenceClient.deleteData(`riffs/${id}`);
+
+  addRating = (id: string, rating: number) => {
+    return PersistenceClient.updateData(`riffs/${id}/ratings`, { [AuthClient.getCurrentUserDisplayName()]: rating });
   };
 }
 

@@ -11,8 +11,8 @@ class RiffAssembler {
     return new Riff({
       id: uuidv4(),
       name,
-      rating: '',
-      author: AuthClient.getCurrentUser()?.displayName || '',
+      ratings: {},
+      author: AuthClient.getCurrentUserDisplayName(),
       creationDate: Date.now(),
       fileName,
     });
@@ -26,7 +26,7 @@ class RiffAssembler {
     return {
       id: riff.id,
       name: riff.name,
-      rating: riff.rating,
+      ratings: riff.ratings,
       author: riff.author,
       creationDate: riff.creationDate,
       fileName: riff.fileName,
