@@ -16,6 +16,7 @@ Aux grands maux les grands moyens comme on dit.
 
 - Bloater le design avec des gifs de feu
 - Système de notifications / alertes quand de nouveaux riffs sont uploader
+- AI / Blockchain / Microservices / NFT / IOT
 
 ## Technical stuff
 
