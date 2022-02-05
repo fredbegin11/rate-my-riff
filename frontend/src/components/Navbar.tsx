@@ -28,7 +28,7 @@ export default function Navbar() {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <Link to="/" className="text-white text-lg font-bold">
+                  <Link to="/riffs" className="text-white text-lg font-bold">
                     RATE MON RIFF
                   </Link>
                 </div>
