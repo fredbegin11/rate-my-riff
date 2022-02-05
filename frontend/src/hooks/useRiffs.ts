@@ -1,14 +1,17 @@
 import { useQuery, useQueryClient } from 'react-query';
-import { CreateRiffFormProps } from '../components/riffs/CreateRiffForm';
+import { CreateCommentFormProps } from '../components/form/CreateCommentForm';
+import { CreateRiffFormProps } from '../components/form/CreateRiffForm';
 import Instrument from '../models/Instrument';
 import Riff from '../models/Riff';
 import RiffsClient from '../services/RiffsClient';
 
 interface RiffsHook {
   actions: {
-    deleteRiff: (id: string) => void;
-    createRiff: (form: CreateRiffFormProps) => void;
-    addRiffRating: (id: string, rating: number) => void;
+    deleteRiff: (id: string) => Promise<void>;
+    createRiff: (form: CreateRiffFormProps) => Promise<void>;
+    addRiffRating: (id: string, rating: number) => Promise<void>;
+    addComment: (riffId: string, form: CreateCommentFormProps) => Promise<void>;
+    removeComment: (riffId: string, commentId: string) => Promise<void>;
   };
   selectors: {
     data: Riff[];
@@ -36,8 +39,18 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
     queryClient.invalidateQueries('riffs');
   };
 
+  const addComment = async (riffId: string, form: CreateCommentFormProps) => {
+    await RiffsClient.addComment(riffId, form);
+    queryClient.invalidateQueries('riffs');
+  };
+
+  const removeComment = async (riffId: string, commentId: string) => {
+    await RiffsClient.removeComment(riffId, commentId);
+    queryClient.invalidateQueries('riffs');
+  };
+
   return {
-    actions: { deleteRiff, createRiff, addRiffRating },
+    actions: { deleteRiff, createRiff, addRiffRating, addComment, removeComment },
     selectors: { data: data.filter((riff) => riff.instrument === instrument), isError, isLoading },
   };
 };

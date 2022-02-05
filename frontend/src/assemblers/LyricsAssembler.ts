@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { CreateLyricsFormProps } from '../components/riffs/CreateLyricsForm';
+import { CreateLyricsFormProps } from '../components/form/CreateLyricsForm';
 import LyricsDto from '../dtos/LyricsDto';
 import Lyrics from '../models/Lyrics';
 import AuthClient from '../services/AuthClient';

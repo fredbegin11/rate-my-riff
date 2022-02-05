@@ -1,7 +1,7 @@
 import { PlusIcon } from '@heroicons/react/outline';
 import { UseFormReturn } from 'react-hook-form';
 import Instrument from '../../models/Instrument';
-import Select from '../form/Select';
+import Select from './Select';
 
 export interface CreateRiffFormProps {
   name: string;
@@ -46,8 +46,8 @@ const CreateRiffForm = ({ form, error, isLoading, onSubmit }: Props) => {
                   placeholder="Instrument"
                   name="instrument"
                   options={[
-                    { label: 'Guitare', value: 'guitar' },
-                    { label: 'Basse', value: 'bass' },
+                    { label: 'Guitare', value: 'strings' },
+                    { label: 'Basse', value: 'strings' },
                     { label: 'Drums', value: 'drums' },
                   ]}
                 />

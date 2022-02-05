@@ -1,13 +1,16 @@
 import { useQuery, useQueryClient } from 'react-query';
-import { CreateLyricsFormProps } from '../components/riffs/CreateLyricsForm';
+import { CreateCommentFormProps } from '../components/form/CreateCommentForm';
+import { CreateLyricsFormProps } from '../components/form/CreateLyricsForm';
 import Lyrics from '../models/Lyrics';
 import LyricsClient from '../services/LyricsClient';
 
 interface LyricsHook {
   actions: {
-    deleteLyrics: (id: string) => void;
-    createLyrics: (form: CreateLyricsFormProps) => void;
-    addLyricsRating: (id: string, rating: number) => void;
+    deleteLyrics: (id: string) => Promise<void>;
+    createLyrics: (form: CreateLyricsFormProps) => Promise<void>;
+    addLyricsRating: (id: string, rating: number) => Promise<void>;
+    addComment: (riffId: string, form: CreateCommentFormProps) => Promise<void>;
+    removeComment: (riffId: string, commentId: string) => Promise<void>;
   };
   selectors: {
     data: Lyrics[];
@@ -35,8 +38,18 @@ const useLyrics = (): LyricsHook => {
     queryClient.invalidateQueries('lyrics');
   };
 
+  const addComment = async (riffId: string, form: CreateCommentFormProps) => {
+    await LyricsClient.addComment(riffId, form);
+    queryClient.invalidateQueries('riffs');
+  };
+
+  const removeComment = async (riffId: string, commentId: string) => {
+    await LyricsClient.removeComment(riffId, commentId);
+    queryClient.invalidateQueries('riffs');
+  };
+
   return {
-    actions: { deleteLyrics, createLyrics, addLyricsRating },
+    actions: { deleteLyrics, createLyrics, addLyricsRating, addComment, removeComment },
     selectors: { data, isError, isLoading },
   };
 };

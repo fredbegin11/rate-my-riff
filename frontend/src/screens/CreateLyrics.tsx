@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
-import CreateLyricsForm, { CreateLyricsFormProps } from '../components/riffs/CreateLyricsForm';
+import CreateLyricsForm, { CreateLyricsFormProps } from '../components/form/CreateLyricsForm';
 import useLyrics from '../hooks/useLyrics';
 
 const CreateLyrics = () => {

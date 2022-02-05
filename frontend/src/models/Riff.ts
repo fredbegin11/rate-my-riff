@@ -1,5 +1,6 @@
 import AuthClient from '../services/AuthClient';
 import StorageClient from '../services/StorageClient';
+import Comment from './Comment';
 import Instrument from './Instrument';
 import Rating from './Ratings';
 
@@ -11,6 +12,7 @@ export interface RiffProps {
   creationDate: number;
   fileName: string;
   instrument: Instrument;
+  comments?: Comment[];
 }
 
 class Riff {
@@ -22,6 +24,7 @@ class Riff {
   fileName: string;
   instrument: Instrument;
   url?: string;
+  comments: Comment[];
 
   constructor(props: RiffProps) {
     this.id = props.id;
@@ -31,6 +34,7 @@ class Riff {
     this.creationDate = props.creationDate;
     this.fileName = props.fileName;
     this.instrument = props.instrument;
+    this.comments = props.comments ? Object.values(props.comments) : [];
   }
 
   async getUrl() {
@@ -48,6 +52,10 @@ class Riff {
     const displayName = AuthClient.getCurrentUserDisplayName();
 
     return this.ratings[displayName] || 0;
+  }
+
+  getOrderedComments() {
+    return this.comments.sort((a, b) => (a.creationDate > b.creationDate ? 1 : -1));
   }
 }
 

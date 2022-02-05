@@ -1,5 +1,7 @@
+import CommentAssembler from '../assemblers/CommentAssembler';
 import LyricsAssembler from '../assemblers/LyricsAssembler';
-import { CreateLyricsFormProps } from '../components/riffs/CreateLyricsForm';
+import { CreateCommentFormProps } from '../components/form/CreateCommentForm';
+import { CreateLyricsFormProps } from '../components/form/CreateLyricsForm';
 import LyricsDto from '../dtos/LyricsDto';
 import AuthClient from './AuthClient';
 import PersistenceClient from './PersistenceClient';
@@ -19,6 +21,15 @@ class LyricsClient {
 
   addRating = (id: string, rating: number) => {
     return PersistenceClient.updateData(`lyrics/${id}/ratings`, { [AuthClient.getCurrentUserDisplayName()]: rating });
+  };
+
+  addComment = (riffId: string, form: CreateCommentFormProps) => {
+    const comment = CommentAssembler.fromForm(form);
+    return PersistenceClient.updateData(`riffs/${riffId}/comments`, { [comment.id]: comment });
+  };
+
+  removeComment = (riffId: string, commentId: string) => {
+    return PersistenceClient.updateData(`riffs/${riffId}/comments/${commentId}`, undefined);
   };
 }
 

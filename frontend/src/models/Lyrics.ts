@@ -1,4 +1,5 @@
 import AuthClient from '../services/AuthClient';
+import Comment from './Comment';
 import Rating from './Ratings';
 
 export interface LyricsProps {
@@ -8,6 +9,7 @@ export interface LyricsProps {
   author: string;
   creationDate: number;
   lyrics: string;
+  comments?: Comment[];
 }
 
 class Lyrics {
@@ -17,6 +19,7 @@ class Lyrics {
   author: string;
   creationDate: number;
   lyrics: string;
+  comments: Comment[];
 
   constructor(props: LyricsProps) {
     this.id = props.id;
@@ -25,6 +28,7 @@ class Lyrics {
     this.author = props.author;
     this.creationDate = props.creationDate;
     this.lyrics = props.lyrics;
+    this.comments = props.comments ? Object.values(props.comments) : [];
   }
 
   getAverageRating() {
@@ -38,6 +42,10 @@ class Lyrics {
     const displayName = AuthClient.getCurrentUserDisplayName();
 
     return this.ratings[displayName] || 0;
+  }
+
+  getOrderedComments() {
+    return this.comments.sort((a, b) => (a.creationDate > b.creationDate ? 1 : -1));
   }
 }
 

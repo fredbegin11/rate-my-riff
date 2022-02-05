@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { CreateRiffFormProps } from '../components/riffs/CreateRiffForm';
+import { CreateRiffFormProps } from '../components/form/CreateRiffForm';
 import RiffDto from '../dtos/RiffDto';
 import Riff from '../models/Riff';
 import AuthClient from '../services/AuthClient';

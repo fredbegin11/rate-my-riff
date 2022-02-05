@@ -8,7 +8,7 @@ interface Key {
 
 interface Action {
   onClick: (id: string) => void;
-  label: string;
+  icon: React.ReactNode;
 }
 
 interface Props {
@@ -37,7 +37,7 @@ export default function List({ isLoading, data = [], keys, actions = [] }: Props
                     </th>
                   ))}
                   {actions.length > 0 && (
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-right">
                       Actions
                     </th>
                   )}
@@ -51,13 +51,13 @@ export default function List({ isLoading, data = [], keys, actions = [] }: Props
                         <div className="text-sm text-gray-900">{key.transformer ? key.transformer(item) : item[key.name]}</div>
                       </td>
                     ))}
-                    {actions.map((action) => (
-                      <td key={action.label} className="px-6 py-4 whitespace-nowrap">
-                        <button type="button" className="btn btn-danger" onClick={() => action.onClick(item.id)}>
-                          {action.label}
+                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                      {actions.map((action, i) => (
+                        <button key={i} type="button" className="button ml-2" onClick={() => action.onClick(item.id)}>
+                          {action.icon}
                         </button>
-                      </td>
-                    ))}
+                      ))}
+                    </td>
                   </tr>
                 ))}
 

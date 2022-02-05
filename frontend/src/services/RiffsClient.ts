@@ -1,5 +1,7 @@
+import CommentAssembler from '../assemblers/CommentAssembler';
 import RiffAssembler from '../assemblers/RiffAssembler';
-import { CreateRiffFormProps } from '../components/riffs/CreateRiffForm';
+import { CreateCommentFormProps } from '../components/form/CreateCommentForm';
+import { CreateRiffFormProps } from '../components/form/CreateRiffForm';
 import RiffDto from '../dtos/RiffDto';
 import Riff from '../models/Riff';
 import AuthClient from './AuthClient';
@@ -22,6 +24,16 @@ class RiffsClient {
 
   addRating = (id: string, rating: number) => {
     return PersistenceClient.updateData(`riffs/${id}/ratings`, { [AuthClient.getCurrentUserDisplayName()]: rating });
+  };
+
+  addComment = (riffId: string, form: CreateCommentFormProps) => {
+    const comment = CommentAssembler.fromForm(form);
+
+    return PersistenceClient.updateData(`riffs/${riffId}/comments`, { [comment.id]: comment });
+  };
+
+  removeComment = (riffId: string, commentId: string) => {
+    return PersistenceClient.deleteData(`riffs/${riffId}/comments/${commentId}`);
   };
 }
 

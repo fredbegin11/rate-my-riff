@@ -6,8 +6,8 @@ Aux grands maux les grands moyens comme on dit.
 
 ## Prochaines étapes de développement
 
-- Section Lyrics
 - Gestion des commentaires
+- RiffList Sorting
 - Photo de profil
 - Gestion du profil
 - Gérer l'accès publique sur invitations

@@ -37,5 +37,7 @@ module.exports = {
     'jsx-a11y/media-has-caption': 'off',
     'operator-linebreak': 'off',
     'react/jsx-wrap-multilines': 'off',
+    'react/no-unstable-nested-components': 'off',
+    'react/no-array-index-key': 'off',
   },
 };
