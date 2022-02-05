@@ -9,7 +9,10 @@ import AuthClient from '../services/AuthClient';
 export default function Navbar() {
   const { pathname } = useLocation();
 
-  const navigation = [{ name: 'Riffs', to: '/riffs', current: pathname === '/riffs' }];
+  const navigation = [
+    { name: 'Riffs', to: '/riffs', current: pathname === '/riffs' },
+    { name: 'Drums', to: '/drums', current: pathname === '/drums' },
+  ];
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -25,7 +28,9 @@ export default function Navbar() {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <span className="text-white text-lg font-bold">RATE MON RIFF</span>
+                  <Link to="/" className="text-white text-lg font-bold">
+                    RATE MON RIFF
+                  </Link>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">

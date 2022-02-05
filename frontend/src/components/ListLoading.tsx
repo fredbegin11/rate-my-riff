@@ -2,7 +2,7 @@ interface Props {
   nbOfColumns?: number;
 }
 
-const ListLoading = ({ nbOfColumns = 6 }: Props) => (
+const ListLoading = ({ nbOfColumns = 7 }: Props) => (
   <>
     {Array.from({ length: 10 }, (_x, x) => (
       <tr key={x} className="animate-pulse py-6">

@@ -1,5 +1,6 @@
 import AuthClient from '../services/AuthClient';
 import StorageClient from '../services/StorageClient';
+import Instrument from './Instrument';
 import Rating from './Ratings';
 
 export interface RiffProps {
@@ -9,6 +10,7 @@ export interface RiffProps {
   author: string;
   creationDate: number;
   fileName: string;
+  instrument: Instrument;
 }
 
 class Riff {
@@ -18,6 +20,7 @@ class Riff {
   author: string;
   creationDate: number;
   fileName: string;
+  instrument: Instrument;
   url?: string;
 
   constructor(props: RiffProps) {
@@ -27,6 +30,7 @@ class Riff {
     this.author = props.author;
     this.creationDate = props.creationDate;
     this.fileName = props.fileName;
+    this.instrument = props.instrument;
   }
 
   async getUrl() {

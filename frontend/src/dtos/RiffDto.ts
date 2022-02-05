@@ -1,3 +1,4 @@
+import Instrument from '../models/Instrument';
 import RatingDto from './RatingDto';
 
 interface RiffDto {
@@ -7,6 +8,7 @@ interface RiffDto {
   author: string;
   creationDate: number;
   fileName: string;
+  instrument: Instrument;
 }
 
 export default RiffDto;

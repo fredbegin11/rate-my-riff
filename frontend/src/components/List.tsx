@@ -28,7 +28,11 @@ export default function List({ isLoading, data = [], keys, actions = [] }: Props
               <thead className="bg-gray-50">
                 <tr>
                   {keys.map((key: Key) => (
-                    <th key={key.name} scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th
+                      key={key.name}
+                      scope="col"
+                      className="min-w-96 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
                       {key.label}
                     </th>
                   ))}
@@ -56,9 +60,15 @@ export default function List({ isLoading, data = [], keys, actions = [] }: Props
                     ))}
                   </tr>
                 ))}
+
                 {isLoading && <ListLoading />}
               </tbody>
             </table>
+            {!isLoading && data.length === 0 && (
+              <div className="flex justify-center py-12">
+                <span className="text-center">Rien à afficher icitte... Enwèye, va composer!</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

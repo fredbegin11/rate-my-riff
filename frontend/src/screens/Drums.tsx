@@ -3,17 +3,17 @@ import Layout from '../components/Layout';
 import useRiffs from '../hooks/useRiffs';
 import RiffList from '../components/RiffList';
 
-const Riffs = () => {
+const Drums = () => {
   const {
     selectors: { data, isLoading },
     actions: { deleteRiff, addRiffRating },
-  } = useRiffs();
+  } = useRiffs('drums');
 
   return (
     <Layout>
       <div className="pt-16 xl:p-16">
         <div className="mb-8 flex justify-between">
-          <span className="ml-6 text-2xl font-bold">Riffs</span>
+          <span className="ml-6 text-2xl font-bold">Drums</span>
           <Link to="/riffs/create" className="mr-6 btn btn-default">
             Ajouter un riff
           </Link>
@@ -24,4 +24,4 @@ const Riffs = () => {
   );
 };
 
-export default Riffs;
+export default Drums;

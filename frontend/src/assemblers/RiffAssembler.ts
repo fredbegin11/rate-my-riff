@@ -5,7 +5,7 @@ import Riff from '../models/Riff';
 import AuthClient from '../services/AuthClient';
 
 class RiffAssembler {
-  fromForm({ file, name }: CreateRiffFormProps) {
+  fromForm({ file, name, instrument }: CreateRiffFormProps) {
     const fileName = file[0].name;
 
     return new Riff({
@@ -15,6 +15,7 @@ class RiffAssembler {
       author: AuthClient.getCurrentUserDisplayName(),
       creationDate: Date.now(),
       fileName,
+      instrument,
     });
   }
 
@@ -30,6 +31,7 @@ class RiffAssembler {
       author: riff.author,
       creationDate: riff.creationDate,
       fileName: riff.fileName,
+      instrument: riff.instrument,
     };
   }
 }

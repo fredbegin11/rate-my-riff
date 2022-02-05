@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import CreateRiff from './screens/CreateRiff';
+import Drums from './screens/Drums';
 import Login from './screens/Login';
 import Riffs from './screens/Riffs';
 
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route path="/riffs/create" element={<PrivateRoute />}>
           <Route path="/riffs/create" element={<CreateRiff />} />
+        </Route>
+        <Route path="/drums" element={<PrivateRoute />}>
+          <Route path="/drums" element={<Drums />} />
         </Route>
         <Route path="*" element={<Navigate to="/riffs" />} />
       </Routes>

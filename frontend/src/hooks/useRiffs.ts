@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from 'react-query';
 import { CreateRiffFormProps } from '../components/riffs/CreateRiffForm';
+import Instrument from '../models/Instrument';
 import Riff from '../models/Riff';
 import RiffsClient from '../services/RiffsClient';
 
@@ -16,7 +17,7 @@ interface RiffsHook {
   };
 }
 
-const useRiffs = (): RiffsHook => {
+const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
   const queryClient = useQueryClient();
   const { data = [], isError, isLoading } = useQuery('riffs', () => RiffsClient.getRiffs());
 
@@ -37,7 +38,7 @@ const useRiffs = (): RiffsHook => {
 
   return {
     actions: { deleteRiff, createRiff, addRiffRating },
-    selectors: { data, isError, isLoading },
+    selectors: { data: data.filter((riff) => riff.instrument === instrument), isError, isLoading },
   };
 };
 
