@@ -12,6 +12,7 @@ export default function Navbar() {
   const navigation = [
     { name: 'Riffs', to: '/riffs', current: pathname === '/riffs' },
     { name: 'Drums', to: '/drums', current: pathname === '/drums' },
+    { name: 'Lyrics', to: '/lyrics', current: pathname === '/lyrics' },
   ];
 
   return (

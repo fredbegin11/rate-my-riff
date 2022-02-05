@@ -19,15 +19,15 @@ interface RiffsHook {
 
 const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
   const queryClient = useQueryClient();
-  const { data = [], isError, isLoading } = useQuery('riffs', () => RiffsClient.getRiffs());
+  const { data = [], isError, isLoading } = useQuery('riffs', () => RiffsClient.getAll());
 
   const deleteRiff = async (id: string) => {
-    await RiffsClient.deleteRiff(id);
+    await RiffsClient.delete(id);
     queryClient.invalidateQueries('riffs');
   };
 
   const createRiff = async (form: CreateRiffFormProps) => {
-    await RiffsClient.createRiff(form);
+    await RiffsClient.create(form);
     queryClient.invalidateQueries('riffs');
   };
 

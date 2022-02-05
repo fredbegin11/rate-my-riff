@@ -36,5 +36,6 @@ module.exports = {
     'no-await-in-loop': 'off',
     'jsx-a11y/media-has-caption': 'off',
     'operator-linebreak': 'off',
+    'react/jsx-wrap-multilines': 'off',
   },
 };
