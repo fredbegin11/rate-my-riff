@@ -9,6 +9,7 @@ import ratingFull from '../assets/rating_full.svg';
 import ratingEmpty from '../assets/rating_empty.svg';
 import DateService from '../services/DateService';
 import CommentsModal from './CommentsModal';
+import { CreateCommentFormProps } from './form/CreateCommentForm';
 
 const renderMyRating = (riff: Riff, onClick: (id: string, rating: number) => void) => (
   <Rating
@@ -22,12 +23,15 @@ const renderMyRating = (riff: Riff, onClick: (id: string, rating: number) => voi
 
 interface Props {
   addRiffRating: (id: string, rating: number) => void;
+  addComment: (riffId: string, form: CreateCommentFormProps) => Promise<void>;
+  removeComment: (riffId: string, commentId: string) => Promise<void>;
   data: Riff[];
   isLoading: boolean;
   deleteRiff: (id: string) => void;
 }
 
-const RiffList = ({ deleteRiff, addRiffRating, data, isLoading }: Props) => {
+const RiffList = ({ deleteRiff, addRiffRating, data, isLoading, addComment, removeComment }: Props) => {
+  const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
   const [itemToComment, setItemToComment] = useState<string | undefined>(undefined);
   const [itemToDelete, setItemToDelete] = useState<string | undefined>(undefined);
 
@@ -38,7 +42,7 @@ const RiffList = ({ deleteRiff, addRiffRating, data, isLoading }: Props) => {
 
   const handleCancel = () => {
     setItemToDelete(undefined);
-    setItemToComment(undefined);
+    setIsCommentModalVisible(false);
   };
 
   return (
@@ -85,12 +89,30 @@ const RiffList = ({ deleteRiff, addRiffRating, data, isLoading }: Props) => {
           { name: 'myRating', label: 'Ma Note', transformer: (riff: Riff) => renderMyRating(riff, addRiffRating) },
         ]}
         actions={[
-          { icon: <AnnotationIcon width={25} height={25} className="text-gray-800" />, onClick: (id: string) => setItemToComment(id) },
+          {
+            render: (showBadge: boolean) => (
+              <div className="relative flex justify-center items-center w-6 h-6 rounded-full">
+                <AnnotationIcon width={25} height={25} className="text-gray-800" />
+                {showBadge && <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-blue-400 rounded-full" />}
+              </div>
+            ),
+            onClick: (id: string) => {
+              setItemToComment(id);
+              setIsCommentModalVisible(true);
+            },
+          },
           { icon: <TrashIcon width={25} height={25} className="text-rose-700" />, onClick: (id: string) => setItemToDelete(id) },
         ]}
       />
       <ConfirmationModal onCancel={handleCancel} onConfirm={() => itemToDelete && handleDelete(itemToDelete)} visible={!!itemToDelete} />
-      <CommentsModal onCancel={handleCancel} onConfirm={() => {}} visible={!!itemToComment} riff={data.find((item) => item.id === itemToComment)!} />
+      <CommentsModal
+        addComment={addComment}
+        removeComment={removeComment}
+        onCancel={handleCancel}
+        onConfirm={() => {}}
+        visible={isCommentModalVisible}
+        item={data.find((item) => item.id === itemToComment)!}
+      />
     </>
   );
 };

@@ -1,14 +1,10 @@
+import Action from '../models/Action';
 import ListLoading from './ListLoading';
 
 interface Key {
   label: string;
   name: string;
   transformer?: (value: any) => string | React.ReactNode;
-}
-
-interface Action {
-  onClick: (id: string) => void;
-  icon: React.ReactNode;
 }
 
 interface Props {
@@ -52,11 +48,16 @@ export default function List({ isLoading, data = [], keys, actions = [] }: Props
                       </td>
                     ))}
                     <td className="px-6 py-4 whitespace-nowrap text-right">
-                      {actions.map((action, i) => (
-                        <button key={i} type="button" className="button ml-2" onClick={() => action.onClick(item.id)}>
-                          {action.icon}
-                        </button>
-                      ))}
+                      {actions.map((action, i) => {
+                        const showBadge = item.comments && item.comments.length > 0;
+
+                        return (
+                          <button key={i} type="button" className="button ml-2" onClick={() => action.onClick(item.id)}>
+                            {action.icon}
+                            {action.render?.(showBadge)}
+                          </button>
+                        );
+                      })}
                     </td>
                   </tr>
                 ))}

@@ -4,26 +4,24 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import CreateCommentForm, { CreateCommentFormProps } from './form/CreateCommentForm';
 import madness from '../assets/madness.png';
-import useRiffs from '../hooks/useRiffs';
 import Riff from '../models/Riff';
 import DateService from '../services/DateService';
+import Lyrics from '../models/Lyrics';
 
 interface Props {
   onConfirm: () => void;
   onCancel: () => void;
   visible: boolean;
-  riff?: Riff;
+  item?: Riff | Lyrics;
+  addComment: (riffId: string, form: CreateCommentFormProps) => Promise<void>;
+  removeComment: (riffId: string, commentId: string) => Promise<void>;
 }
 
-export default function CommentsModal({ onConfirm, onCancel, visible, riff }: Props) {
+export default function CommentsModal({ onConfirm, onCancel, visible, item, addComment, removeComment }: Props) {
   const form = useForm<CreateCommentFormProps>();
 
-  const {
-    actions: { addComment, removeComment },
-  } = useRiffs();
-
   const onSubmit = async (values: CreateCommentFormProps) => {
-    await addComment(riff!.id, values);
+    await addComment(item!.id, values);
     form.reset();
   };
 
@@ -57,14 +55,14 @@ export default function CommentsModal({ onConfirm, onCancel, visible, riff }: Pr
           >
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="overflow-y-auto max-h-[90vh]">
-                {riff && riff.comments.length > 0 && (
+                {item && item.comments.length > 0 && (
                   <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div className="sm:flex sm:items-start">
                       <div className="mt-3 text-center sm:text-left w-full">
                         <Dialog.Title as="h3" className="leading-6 text-2xl font-bold text-gray-900">
                           Commentaires
                         </Dialog.Title>
-                        {riff.getOrderedComments().map((comment) => (
+                        {item.getOrderedComments().map((comment) => (
                           <div key={comment.id} className="flex flex-col mt-6 shadow-lg rounded-lg w-full p-4">
                             <div className="flex justify-between items-center">
                               <div className="flex items-center">
@@ -75,7 +73,7 @@ export default function CommentsModal({ onConfirm, onCancel, visible, riff }: Pr
                                   <span className="font-sm text-gray-500">{DateService.format(comment.creationDate, 'yyyy/MM/dd HH:mm')}</span>
                                 </div>
                               </div>
-                              <button className="button" type="button" onClick={() => removeComment(riff.id, comment.id)}>
+                              <button className="button" type="button" onClick={() => removeComment(item.id, comment.id)}>
                                 <TrashIcon width={25} height={25} className="text-rose-700" />
                               </button>
                             </div>

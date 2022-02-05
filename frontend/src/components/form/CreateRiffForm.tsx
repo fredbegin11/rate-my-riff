@@ -23,7 +23,7 @@ const CreateRiffForm = ({ form, error, isLoading, onSubmit }: Props) => {
         <span className="text-2xl font-bold">Ajouter un riff</span>
         <form className="mt-8 space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm">
+          <div className="rounded-md">
             <div className="mb-4">
               <label htmlFor="name">Nom du riff</label>
               <input

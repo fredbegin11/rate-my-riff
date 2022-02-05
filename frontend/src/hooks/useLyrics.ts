@@ -40,12 +40,12 @@ const useLyrics = (): LyricsHook => {
 
   const addComment = async (riffId: string, form: CreateCommentFormProps) => {
     await LyricsClient.addComment(riffId, form);
-    queryClient.invalidateQueries('riffs');
+    queryClient.invalidateQueries('lyrics');
   };
 
   const removeComment = async (riffId: string, commentId: string) => {
     await LyricsClient.removeComment(riffId, commentId);
-    queryClient.invalidateQueries('riffs');
+    queryClient.invalidateQueries('lyrics');
   };
 
   return {

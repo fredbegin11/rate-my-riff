@@ -23,13 +23,13 @@ class LyricsClient {
     return PersistenceClient.updateData(`lyrics/${id}/ratings`, { [AuthClient.getCurrentUserDisplayName()]: rating });
   };
 
-  addComment = (riffId: string, form: CreateCommentFormProps) => {
+  addComment = (lyricsId: string, form: CreateCommentFormProps) => {
     const comment = CommentAssembler.fromForm(form);
-    return PersistenceClient.updateData(`riffs/${riffId}/comments`, { [comment.id]: comment });
+    return PersistenceClient.updateData(`lyrics/${lyricsId}/comments`, { [comment.id]: comment });
   };
 
-  removeComment = (riffId: string, commentId: string) => {
-    return PersistenceClient.updateData(`riffs/${riffId}/comments/${commentId}`, undefined);
+  removeComment = (lyricsId: string, commentId: string) => {
+    return PersistenceClient.deleteData(`lyrics/${lyricsId}/comments/${commentId}`);
   };
 }
 

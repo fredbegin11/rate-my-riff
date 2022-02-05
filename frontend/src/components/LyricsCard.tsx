@@ -3,27 +3,32 @@ import Lyrics from '../models/Lyrics';
 import ratingFull from '../assets/rating_full.svg';
 import ratingEmpty from '../assets/rating_empty.svg';
 import DateService from '../services/DateService';
-
-interface Action {
-  onClick: () => void;
-  icon: React.ReactNode;
-}
+import Action from '../models/Action';
 
 interface Props {
   lyrics: Lyrics;
-  action: Action;
+  actions: Action[];
   addRating: (id: string, rating: number) => void;
 }
 
-const LyricsCard = ({ lyrics, action, addRating }: Props) => {
+const LyricsCard = ({ lyrics, actions, addRating }: Props) => {
   return (
     <div className="py-4 px-8 bg-white shadow-lg rounded-lg">
       <div>
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-gray-800 text-xl font-semibold">{lyrics.name}</h2>
-          <button type="button" onClick={action.onClick}>
-            {action.icon}
-          </button>
+          <div className="flex">
+            {actions.map((action) => {
+              const showBadge = lyrics.comments && lyrics.comments.length > 0;
+
+              return (
+                <button type="button" onClick={() => action.onClick(lyrics.id)}>
+                  {action.icon}
+                  {action.render?.(showBadge)}
+                </button>
+              );
+            })}
+          </div>
         </div>
         <hr />
         <p className="whitespace-pre-wrap mt-4 mb-6 text-gray-600">{lyrics.lyrics}</p>

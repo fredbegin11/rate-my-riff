@@ -6,7 +6,7 @@ Aux grands maux les grands moyens comme on dit.
 
 ## Prochaines étapes de développement
 
-- Gestion des commentaires
+- Favicon + HTML Title
 - RiffList Sorting
 - Photo de profil
 - Gestion du profil

@@ -18,7 +18,7 @@ const CreateCommentForm = ({ form, onSubmit, onConfirm, onCancel }: Props) => {
         <span className="text-2xl font-bold">Ajouter un commentaire</span>
         <form className="mt-8 space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm">
+          <div className="rounded-md">
             <div className="mb-4">
               <label htmlFor="instrument" className="font-semibold">
                 Commentaire
@@ -36,7 +36,7 @@ const CreateCommentForm = ({ form, onSubmit, onConfirm, onCancel }: Props) => {
           </div>
 
           <div>
-            <div className="bg-white px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <div className="bg-white py-3 sm:flex sm:flex-row-reverse">
               <button
                 type="submit"
                 className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 sm:ml-3 sm:w-auto sm:text-sm"

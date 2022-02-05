@@ -6,7 +6,7 @@ import RiffList from '../components/RiffList';
 const Riffs = () => {
   const {
     selectors: { data, isLoading },
-    actions: { deleteRiff, addRiffRating },
+    actions: { deleteRiff, addRiffRating, removeComment, addComment },
   } = useRiffs();
 
   return (
@@ -18,7 +18,14 @@ const Riffs = () => {
             Ajouter un riff
           </Link>
         </div>
-        <RiffList data={data} isLoading={isLoading} deleteRiff={deleteRiff} addRiffRating={addRiffRating} />
+        <RiffList
+          addComment={addComment}
+          removeComment={removeComment}
+          data={data}
+          isLoading={isLoading}
+          deleteRiff={deleteRiff}
+          addRiffRating={addRiffRating}
+        />
       </div>
     </Layout>
   );
