@@ -1,5 +1,6 @@
 import { AnnotationIcon, TrashIcon } from '@heroicons/react/outline';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { Cell } from 'react-table';
 import Rating from 'react-rating';
 import AudioPlayer from './AudioPlayer';
 import List from './List';
@@ -13,7 +14,7 @@ import { CreateCommentFormProps } from './form/CreateCommentForm';
 
 const renderMyRating = (riff: Riff, onClick: (id: string, rating: number) => void) => (
   <Rating
-    initialRating={riff.getMyRating()}
+    initialRating={riff.myRating}
     emptySymbol={<img width={35} alt="empty" src={ratingEmpty} />}
     fullSymbol={<img width={35} alt="full" src={ratingFull} />}
     onClick={(rating) => onClick(riff.id, rating)}
@@ -45,65 +46,74 @@ const RiffList = ({ deleteRiff, addRiffRating, data, isLoading, addComment, remo
     setIsCommentModalVisible(false);
   };
 
+  const columns = useMemo(
+    () => [
+      {
+        accessor: 'fileName',
+        Header: 'Audio',
+        Cell: ({ row }: Cell) => <AudioPlayer riff={row.original as Riff} />,
+      },
+      {
+        accessor: 'name',
+        Header: 'Nom',
+        Cell: ({ value }: Cell) => (
+          <div className="text-sm text-gray-900 max-w-sm text-ellipsis overflow-hidden" title={value}>
+            {value}
+          </div>
+        ),
+      },
+      {
+        accessor: 'creationDate',
+        Header: 'Date de Création',
+        Cell: ({ value }: Cell) => DateService.format(value),
+      },
+      { accessor: 'author', Header: 'Auteur' },
+      {
+        accessor: 'averageRating',
+        Header: 'Note Moyenne',
+        Cell: ({ value }: Cell) => (
+          <div className="flex flex-col">
+            <Rating
+              readonly
+              initialRating={value}
+              emptySymbol={<img width={35} alt="empty" src={ratingEmpty} />}
+              fullSymbol={<img width={35} alt="full" src={ratingFull} />}
+              className="w-36"
+            />
+          </div>
+        ),
+      },
+      {
+        accessor: 'myRating',
+        Header: 'Ma Note',
+        Cell: ({ row }: Cell) => renderMyRating(row.original as Riff, addRiffRating),
+      },
+    ],
+    []
+  );
+
+  const actions = useMemo(
+    () => [
+      {
+        render: (showBadge: boolean) => (
+          <div className="relative flex justify-center items-center w-6 h-6 rounded-full">
+            <AnnotationIcon width={25} height={25} className="text-gray-800" />
+            {showBadge && <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-blue-400 rounded-full" />}
+          </div>
+        ),
+        onClick: (id: string) => {
+          setItemToComment(id);
+          setIsCommentModalVisible(true);
+        },
+      },
+      { icon: <TrashIcon width={25} height={25} className="text-rose-700" />, onClick: (id: string) => setItemToDelete(id) },
+    ],
+    []
+  );
+
   return (
     <>
-      <List
-        data={data}
-        isLoading={isLoading}
-        keys={[
-          {
-            name: 'fileName',
-            label: 'Audio',
-            transformer: (riff: Riff) => <AudioPlayer riff={riff} />,
-          },
-          {
-            name: 'name',
-            label: 'Nom',
-            transformer: (riff: Riff) => (
-              <div className="text-sm text-gray-900 max-w-sm text-ellipsis overflow-hidden" title={riff.name}>
-                {riff.name}
-              </div>
-            ),
-          },
-          {
-            name: 'creationDate',
-            label: 'Date de Création',
-            transformer: (riff: Riff) => DateService.format(riff.creationDate),
-          },
-          { name: 'author', label: 'Auteur' },
-          {
-            name: 'averageRating',
-            label: 'Note Moyenne',
-            transformer: (riff: Riff) => (
-              <div className="flex flex-col">
-                <Rating
-                  readonly
-                  initialRating={riff.getAverageRating()}
-                  emptySymbol={<img width={35} alt="empty" src={ratingEmpty} />}
-                  fullSymbol={<img width={35} alt="full" src={ratingFull} />}
-                  className="w-36"
-                />
-              </div>
-            ),
-          },
-          { name: 'myRating', label: 'Ma Note', transformer: (riff: Riff) => renderMyRating(riff, addRiffRating) },
-        ]}
-        actions={[
-          {
-            render: (showBadge: boolean) => (
-              <div className="relative flex justify-center items-center w-6 h-6 rounded-full">
-                <AnnotationIcon width={25} height={25} className="text-gray-800" />
-                {showBadge && <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-blue-400 rounded-full" />}
-              </div>
-            ),
-            onClick: (id: string) => {
-              setItemToComment(id);
-              setIsCommentModalVisible(true);
-            },
-          },
-          { icon: <TrashIcon width={25} height={25} className="text-rose-700" />, onClick: (id: string) => setItemToDelete(id) },
-        ]}
-      />
+      <List data={data} isLoading={isLoading} columns={columns} actions={actions} />
       <ConfirmationModal onCancel={handleCancel} onConfirm={() => itemToDelete && handleDelete(itemToDelete)} visible={!!itemToDelete} />
       <CommentsModal
         addComment={addComment}

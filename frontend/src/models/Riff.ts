@@ -25,6 +25,8 @@ class Riff {
   instrument: Instrument;
   url?: string;
   comments: Comment[];
+  averageRating: number;
+  myRating: number;
 
   constructor(props: RiffProps) {
     this.id = props.id;
@@ -35,23 +37,17 @@ class Riff {
     this.fileName = props.fileName;
     this.instrument = props.instrument;
     this.comments = props.comments ? Object.values(props.comments) : [];
+
+    const rawRatings = Object.values(this.ratings).map((rating) => rating);
+    const sum = rawRatings.reduce((a, b) => a + b, 0);
+    const displayName = AuthClient.getCurrentUserDisplayName();
+
+    this.averageRating = sum / rawRatings.length || 0;
+    this.myRating = this.ratings[displayName] || 0;
   }
 
   async getUrl() {
     return this.fileName ? StorageClient.getFileUrl(this.fileName) : '';
-  }
-
-  getAverageRating() {
-    const rawRatings = Object.values(this.ratings).map((rating) => rating);
-    const sum = rawRatings.reduce((a, b) => a + b, 0);
-
-    return sum / rawRatings.length || 0;
-  }
-
-  getMyRating() {
-    const displayName = AuthClient.getCurrentUserDisplayName();
-
-    return this.ratings[displayName] || 0;
   }
 
   getOrderedComments() {

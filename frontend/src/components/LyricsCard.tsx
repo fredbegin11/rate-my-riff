@@ -42,14 +42,14 @@ const LyricsCard = ({ lyrics, actions, addRating }: Props) => {
       <h2 className="mt-4 mb-1 text-gray-800 font-semibold">Note Moyenne</h2>
       <Rating
         readonly
-        initialRating={lyrics.getAverageRating()}
+        initialRating={lyrics.averageRating}
         emptySymbol={<img width={35} alt="empty" src={ratingEmpty} />}
         fullSymbol={<img width={35} alt="full" src={ratingFull} />}
         className="w-48"
       />
       <h2 className="mt-4 mb-1 text-gray-800 font-semibold">Ma Note</h2>
       <Rating
-        initialRating={lyrics.getMyRating()}
+        initialRating={lyrics.myRating}
         emptySymbol={<img width={35} alt="empty" src={ratingEmpty} />}
         fullSymbol={<img width={35} alt="full" src={ratingFull} />}
         onClick={(rating) => addRating(lyrics.id, rating)}

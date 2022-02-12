@@ -20,6 +20,8 @@ class Lyrics {
   creationDate: number;
   lyrics: string;
   comments: Comment[];
+  averageRating: number;
+  myRating: number;
 
   constructor(props: LyricsProps) {
     this.id = props.id;
@@ -29,19 +31,13 @@ class Lyrics {
     this.creationDate = props.creationDate;
     this.lyrics = props.lyrics;
     this.comments = props.comments ? Object.values(props.comments) : [];
-  }
 
-  getAverageRating() {
     const rawRatings = Object.values(this.ratings).map((rating) => rating);
     const sum = rawRatings.reduce((a, b) => a + b, 0);
-
-    return sum / rawRatings.length || 0;
-  }
-
-  getMyRating() {
     const displayName = AuthClient.getCurrentUserDisplayName();
 
-    return this.ratings[displayName] || 0;
+    this.averageRating = sum / rawRatings.length || 0;
+    this.myRating = this.ratings[displayName] || 0;
   }
 
   getOrderedComments() {

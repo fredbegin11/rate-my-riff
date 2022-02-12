@@ -39,5 +39,6 @@ module.exports = {
     'react/jsx-wrap-multilines': 'off',
     'react/no-unstable-nested-components': 'off',
     'react/no-array-index-key': 'off',
+    'react/prop-types': 'off',
   },
 };
