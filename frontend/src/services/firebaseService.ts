@@ -1,5 +1,6 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import { updateProfile } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 import { getStorage } from 'firebase/storage';
 
@@ -23,6 +24,8 @@ const database = getDatabase(app);
 
 const storage = getStorage(app);
 
-export { auth, database, storage };
+export type User = firebase.User;
+
+export { auth, database, storage, updateProfile };
 
 export default firebase;

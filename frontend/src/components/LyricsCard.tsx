@@ -4,16 +4,17 @@ import ratingFull from '../assets/rating_full.svg';
 import ratingEmpty from '../assets/rating_empty.svg';
 import DateService from '../services/DateService';
 import Action from '../models/Action';
+import { AddRatingProps } from '../hooks/useLyrics';
 
 interface Props {
   lyrics: Lyrics;
   actions: Action[];
-  addRating: (id: string, rating: number) => void;
+  addRating: (props: AddRatingProps) => void;
 }
 
 const LyricsCard = ({ lyrics, actions, addRating }: Props) => {
   return (
-    <div className="py-4 px-8 bg-white shadow-lg rounded-lg">
+    <div className="py-4 px-8 bg-white border border-gray-200 shadow-lg rounded-lg">
       <div>
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-gray-800 text-xl font-semibold">{lyrics.name}</h2>
@@ -52,7 +53,7 @@ const LyricsCard = ({ lyrics, actions, addRating }: Props) => {
         initialRating={lyrics.myRating}
         emptySymbol={<img width={35} alt="empty" src={ratingEmpty} />}
         fullSymbol={<img width={35} alt="full" src={ratingFull} />}
-        onClick={(rating) => addRating(lyrics.id, rating)}
+        onClick={(rating) => addRating({ id: lyrics.id, rating })}
         className="w-48"
       />
     </div>

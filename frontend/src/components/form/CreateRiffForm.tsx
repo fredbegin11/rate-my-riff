@@ -13,16 +13,15 @@ interface Props {
   form: UseFormReturn<CreateRiffFormProps, object>;
   onSubmit: (values: CreateRiffFormProps) => Promise<void>;
   isLoading: boolean;
-  error: string;
+  isError: boolean;
 }
 
-const CreateRiffForm = ({ form, error, isLoading, onSubmit }: Props) => {
+const CreateRiffForm = ({ form, isError, isLoading, onSubmit }: Props) => {
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <span className="text-2xl font-bold">Ajouter un riff</span>
         <form className="mt-8 space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-          <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md">
             <div className="mb-4">
               <label htmlFor="name">Nom du riff</label>
@@ -49,6 +48,7 @@ const CreateRiffForm = ({ form, error, isLoading, onSubmit }: Props) => {
                     { label: 'Guitare', value: 'strings' },
                     { label: 'Basse', value: 'strings' },
                     { label: 'Drums', value: 'drums' },
+                    { label: 'Full Band', value: 'fullband' },
                   ]}
                 />
               </div>
@@ -79,7 +79,7 @@ const CreateRiffForm = ({ form, error, isLoading, onSubmit }: Props) => {
             </button>
 
             <p>Vu que le stockage est pas mal limité, seulement les fichiers mp3 sont acceptés.</p>
-            {!isLoading && error && <span className="pt-6 text-rose-700">{error}</span>}
+            {!isLoading && isError && <span className="pt-6 text-rose-700">Ça marche pas...</span>}
             {isLoading && <span className="pt-6">Ça load, sera pas long...</span>}
           </div>
         </form>

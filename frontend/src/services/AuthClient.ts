@@ -1,4 +1,4 @@
-import { auth } from './firebaseService';
+import { auth, User } from './firebaseService';
 
 class AuthClient {
   loginUser = (email: string, password: string) => {
@@ -9,8 +9,13 @@ class AuthClient {
     return auth.signOut();
   };
 
-  getCurrentUser = () => {
-    return auth.currentUser;
+  getCurrentUser = (): Promise<User | null> => {
+    return new Promise<User | null>((resolve, reject) => {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        unsubscribe();
+        resolve(user);
+      }, reject);
+    });
   };
 
   getCurrentUserDisplayName = () => {

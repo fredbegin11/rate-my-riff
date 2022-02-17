@@ -22,7 +22,6 @@ export default function LoginForm({ form, error, isLoading, onSubmit }: Props) {
           <img className="mx-auto h-auto w-auto" src={prestone} alt="Workflow" />
         </div>
         <form className="mt-8 space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-          <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div className="mb-4">
               <label htmlFor="email-address">Email address</label>

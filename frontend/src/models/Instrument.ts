@@ -1,3 +1,3 @@
-type Instrument = 'strings' | 'drums';
+type Instrument = 'strings' | 'drums' | 'fullband';
 
 export default Instrument;

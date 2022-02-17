@@ -24,8 +24,8 @@ export default function List({ isLoading, data = [], columns, actions = [] }: Pr
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table {...getTableProps()} className="min-w-full divide-y divide-gray-200 border border-gray-200">
+              <thead className="bg-gray-50 border-b">
                 {headerGroups.map((headerGroup) => (
                   <tr {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map((column: any) => (
@@ -46,12 +46,12 @@ export default function List({ isLoading, data = [], columns, actions = [] }: Pr
                   </tr>
                 ))}
               </thead>
-              <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
+              <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-300">
                 {rows.map((row: any) => {
                   prepareRow(row);
 
                   return (
-                    <tr {...row.getRowProps()}>
+                    <tr {...row.getRowProps()} className="border-b border-gray-300">
                       {row.cells.map((cell: any) => (
                         <td {...cell.getCellProps()} className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">{cell.render('Cell')}</div>

@@ -17,7 +17,6 @@ const CreateCommentForm = ({ form, onSubmit, onConfirm, onCancel }: Props) => {
       <div className="max-w-md w-full space-y-8">
         <span className="text-2xl font-bold">Ajouter un commentaire</span>
         <form className="mt-8 space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-          <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md">
             <div className="mb-4">
               <label htmlFor="instrument" className="font-semibold">

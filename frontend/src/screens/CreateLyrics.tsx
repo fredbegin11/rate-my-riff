@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -6,24 +5,16 @@ import CreateLyricsForm, { CreateLyricsFormProps } from '../components/form/Crea
 import useLyrics from '../hooks/useLyrics';
 
 const CreateLyrics = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const {
     actions: { createLyrics },
+    selectors: { isCreateLyricsError, isCreateLyricsLoading },
   } = useLyrics();
 
   const onSubmit = async (values: CreateLyricsFormProps) => {
-    setIsLoading(true);
-    try {
-      await createLyrics(values);
-      navigate('/lyrics');
-    } catch (err) {
-      setError('Ça marche pas');
-    } finally {
-      setIsLoading(false);
-    }
+    await createLyrics(values);
+    navigate('/lyrics');
   };
 
   const form = useForm<CreateLyricsFormProps>();
@@ -31,7 +22,7 @@ const CreateLyrics = () => {
   return (
     <Layout>
       <div className="p-16">
-        <CreateLyricsForm form={form} onSubmit={onSubmit} isLoading={isLoading} error={error} />
+        <CreateLyricsForm form={form} onSubmit={onSubmit} isLoading={isCreateLyricsLoading} isError={isCreateLyricsError} />
       </div>
     </Layout>
   );

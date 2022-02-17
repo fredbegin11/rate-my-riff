@@ -7,21 +7,22 @@ import madness from '../assets/madness.png';
 import Riff from '../models/Riff';
 import DateService from '../services/DateService';
 import Lyrics from '../models/Lyrics';
+import { AddCommentProps, RemoveCommentProps } from '../hooks/useLyrics';
 
 interface Props {
   onConfirm: () => void;
   onCancel: () => void;
   visible: boolean;
   item?: Riff | Lyrics;
-  addComment: (riffId: string, form: CreateCommentFormProps) => Promise<void>;
-  removeComment: (riffId: string, commentId: string) => Promise<void>;
+  addComment: (props: AddCommentProps) => void;
+  removeComment: (props: RemoveCommentProps) => void;
 }
 
 export default function CommentsModal({ onConfirm, onCancel, visible, item, addComment, removeComment }: Props) {
   const form = useForm<CreateCommentFormProps>();
 
   const onSubmit = async (values: CreateCommentFormProps) => {
-    await addComment(item!.id, values);
+    await addComment({ riffId: item!.id, form: values });
     form.reset();
   };
 
@@ -73,7 +74,7 @@ export default function CommentsModal({ onConfirm, onCancel, visible, item, addC
                                   <span className="font-sm text-gray-500">{DateService.format(comment.creationDate, 'yyyy/MM/dd HH:mm')}</span>
                                 </div>
                               </div>
-                              <button className="button" type="button" onClick={() => removeComment(item.id, comment.id)}>
+                              <button className="button" type="button" onClick={() => removeComment({ riffId: item.id, commentId: comment.id })}>
                                 <TrashIcon width={25} height={25} className="text-rose-700" />
                               </button>
                             </div>

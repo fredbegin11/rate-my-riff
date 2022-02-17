@@ -10,6 +10,7 @@ export default function Navbar() {
   const { pathname } = useLocation();
 
   const navigation = [
+    { name: 'Setlist', to: '/setlist', current: pathname === '/setlist' },
     { name: 'Riffs', to: '/riffs', current: pathname === '/riffs' },
     { name: 'Drums', to: '/drums', current: pathname === '/drums' },
     { name: 'Lyrics', to: '/lyrics', current: pathname === '/lyrics' },
@@ -100,8 +101,13 @@ export default function Navbar() {
                   >
                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
+                        <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 w-full text-center">
+                          Mon Profile
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item>
                         <button type="button" onClick={() => AuthClient.signOut()} className="block px-4 py-2 text-sm text-gray-700 w-full">
-                          Sign out
+                          Logout
                         </button>
                       </Menu.Item>
                     </Menu.Items>

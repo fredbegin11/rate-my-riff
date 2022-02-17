@@ -2,6 +2,7 @@ import { AnnotationIcon, TrashIcon } from '@heroicons/react/outline';
 import { useMemo, useState } from 'react';
 import { Cell } from 'react-table';
 import Rating from 'react-rating';
+import { UseMutateFunction } from 'react-query';
 import AudioPlayer from './AudioPlayer';
 import List from './List';
 import ConfirmationModal from './ConfirmationModal';
@@ -10,22 +11,22 @@ import ratingFull from '../assets/rating_full.svg';
 import ratingEmpty from '../assets/rating_empty.svg';
 import DateService from '../services/DateService';
 import CommentsModal from './CommentsModal';
-import { CreateCommentFormProps } from './form/CreateCommentForm';
+import { AddCommentProps, AddRatingProps, RemoveCommentProps } from '../hooks/useRiffs';
 
-const renderMyRating = (riff: Riff, onClick: (id: string, rating: number) => void) => (
+const renderMyRating = (riff: Riff, onClick: (props: AddRatingProps) => void) => (
   <Rating
     initialRating={riff.myRating}
     emptySymbol={<img width={35} alt="empty" src={ratingEmpty} />}
     fullSymbol={<img width={35} alt="full" src={ratingFull} />}
-    onClick={(rating) => onClick(riff.id, rating)}
+    onClick={(rating) => onClick({ id: riff.id, rating })}
     className="w-36"
   />
 );
 
 interface Props {
-  addRiffRating: (id: string, rating: number) => void;
-  addComment: (riffId: string, form: CreateCommentFormProps) => Promise<void>;
-  removeComment: (riffId: string, commentId: string) => Promise<void>;
+  addRiffRating: UseMutateFunction<void, unknown, AddRatingProps, unknown>;
+  addComment: UseMutateFunction<void, unknown, AddCommentProps, unknown>;
+  removeComment: UseMutateFunction<void, unknown, RemoveCommentProps, unknown>;
   data: Riff[];
   isLoading: boolean;
   deleteRiff: (id: string) => void;
