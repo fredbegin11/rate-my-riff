@@ -3,9 +3,7 @@ import { EditProfileFormProps } from '../components/form/EditProfileForm';
 import { LoginFormProps } from '../components/login/LoginForm';
 import AuthClient from '../services/AuthClient';
 import { User, updateProfile } from '../services/firebaseService';
-import StorageClient from '../services/StorageClient';
 import { HookAction } from './HookAction';
-import useFileUpload from './useFileUpload';
 
 interface AuthHook {
   actions: {
@@ -28,10 +26,6 @@ const useAuth = (props: Props = {}): AuthHook => {
   const { data: user = null, isError, isLoading } = useQuery('currentUser', () => AuthClient.getCurrentUser());
 
   const {
-    actions: { uploadFile },
-  } = useFileUpload();
-
-  const {
     mutate: login,
     isError: isLoginError,
     isSuccess: isLoginSuccess,
@@ -46,29 +40,14 @@ const useAuth = (props: Props = {}): AuthHook => {
     }
   );
 
-  console.log('isLoginError: ', isLoginError);
-
   const {
     mutate: editProfile,
     isError: isEditProfileError,
     isSuccess: isEditProfileSuccess,
     isLoading: isEditProfileLoading,
   } = useMutation('editProfile', async (values: EditProfileFormProps) => {
-    if (values.photo.length > 0) {
-      await uploadFile(values.photo[0].name, values.photo[0]);
-    }
-
-    let fileUrl;
-    if (values.photo.length > 0) {
-      const fileName = values.photo[0].name;
-      fileUrl = await StorageClient.getFileUrl(fileName);
-    }
-
     if (user) {
-      await updateProfile(user, {
-        displayName: values.name,
-        photoURL: fileUrl,
-      });
+      await updateProfile(user, { displayName: values.name });
     }
 
     queryClient.invalidateQueries('currentUser');

@@ -3,11 +3,11 @@ import { TrashIcon } from '@heroicons/react/outline';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import CreateCommentForm, { CreateCommentFormProps } from './form/CreateCommentForm';
-import madness from '../assets/madness.png';
 import Riff from '../models/Riff';
 import DateService from '../services/DateService';
 import Lyrics from '../models/Lyrics';
 import { AddCommentProps, RemoveCommentProps } from '../hooks/useLyrics';
+import ProfilePhotoService from '../services/ProfilePhotoService';
 
 interface Props {
   onConfirm: () => void;
@@ -63,25 +63,30 @@ export default function CommentsModal({ onConfirm, onCancel, visible, item, addC
                         <Dialog.Title as="h3" className="leading-6 text-2xl font-bold text-gray-900">
                           Commentaires
                         </Dialog.Title>
-                        {item.getOrderedComments().map((comment) => (
-                          <div key={comment.id} className="flex flex-col mt-6 shadow-lg rounded-lg w-full p-4">
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center">
-                                <img className="h-12 w-12 rounded-full mr-2" src={madness} alt="" />
+                        {item.getOrderedComments().map((comment) => {
+                          console.log('comment?.author: ', comment?.author);
+                          const photoUrl = ProfilePhotoService.getProfilePhoto({ name: comment?.author });
 
-                                <div className="flex flex-col">
-                                  <span className="font-semibold text-gray-800 pr-1">{comment.author}</span>
-                                  <span className="font-sm text-gray-500">{DateService.format(comment.creationDate, 'yyyy/MM/dd HH:mm')}</span>
+                          return (
+                            <div key={comment.id} className="flex flex-col mt-6 shadow-lg rounded-lg w-full p-4">
+                              <div className="flex justify-between items-center">
+                                <div className="flex items-center">
+                                  <img className="h-12 w-12 rounded-full mr-2" src={photoUrl} alt="" />
+
+                                  <div className="flex flex-col">
+                                    <span className="font-semibold text-gray-800 pr-1">{comment.author}</span>
+                                    <span className="font-sm text-gray-500">{DateService.format(comment.creationDate, 'yyyy/MM/dd HH:mm')}</span>
+                                  </div>
                                 </div>
+                                <button className="button" type="button" onClick={() => removeComment({ riffId: item.id, commentId: comment.id })}>
+                                  <TrashIcon width={25} height={25} className="text-rose-700" />
+                                </button>
                               </div>
-                              <button className="button" type="button" onClick={() => removeComment({ riffId: item.id, commentId: comment.id })}>
-                                <TrashIcon width={25} height={25} className="text-rose-700" />
-                              </button>
-                            </div>
 
-                            <span className="mt-2 text-gray-800 whitespace-pre-wrap">{comment.message}</span>
-                          </div>
-                        ))}
+                              <span className="mt-2 text-gray-800 whitespace-pre-wrap">{comment.message}</span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>

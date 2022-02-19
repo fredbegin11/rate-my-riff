@@ -3,8 +3,10 @@ import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import classNames from 'classnames';
-import madness from '../assets/madness.png';
 import AuthClient from '../services/AuthClient';
+import useAuth from '../hooks/useAuth';
+import LoadingIcon from './LoadingIcon';
+import ProfilePhotoService from '../services/ProfilePhotoService';
 
 export default function Navbar() {
   const { pathname } = useLocation();
@@ -15,6 +17,12 @@ export default function Navbar() {
     { name: 'Drums', to: '/drums', current: pathname === '/drums' },
     { name: 'Lyrics', to: '/lyrics', current: pathname === '/lyrics' },
   ];
+
+  const {
+    selectors: { user },
+  } = useAuth();
+
+  const photoUrl = ProfilePhotoService.getProfilePhoto({ name: user?.displayName });
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -87,7 +95,7 @@ export default function Navbar() {
                   <div>
                     <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">Open user menu</span>
-                      <img className="h-8 w-8 rounded-full" src={madness} alt="" />
+                      {photoUrl ? <img className="object-cover h-8 w-8 rounded-full" src={photoUrl} alt="" /> : <LoadingIcon />}
                     </Menu.Button>
                   </div>
                   <Transition

@@ -1,4 +1,4 @@
-const ButtonLoadingIcon = () => {
+const LoadingIcon = () => {
   return (
     <div className="flex items-center">
       <div
@@ -10,4 +10,4 @@ const ButtonLoadingIcon = () => {
   );
 };
 
-export default ButtonLoadingIcon;
+export default LoadingIcon;

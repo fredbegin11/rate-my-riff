@@ -18,9 +18,7 @@ class AuthClient {
     });
   };
 
-  getCurrentUserDisplayName = () => {
-    return auth.currentUser?.displayName || '-';
-  };
+  getCurrentUserDisplayName = () => auth.currentUser?.displayName || '-';
 }
 
 export default new AuthClient();
