@@ -64,7 +64,6 @@ export default function CommentsModal({ onConfirm, onCancel, visible, item, addC
                           Commentaires
                         </Dialog.Title>
                         {item.getOrderedComments().map((comment) => {
-                          console.log('comment?.author: ', comment?.author);
                           const photoUrl = ProfilePhotoService.getProfilePhoto({ name: comment?.author });
 
                           return (

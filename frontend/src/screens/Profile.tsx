@@ -28,8 +28,8 @@ const Profile = () => {
   return (
     <Layout>
       <div className="pt-16 xl:p-16">
-        <div className="ml-6 flex flex-col">
-          <span className="text-2xl font-bold">Mon Profile</span>
+        <div className="mx-6 flex flex-col">
+          <span className="text-2xl font-bold">Mon Profil</span>
           <EditProfileForm form={form} isError={isError} isLoading={isLoading} onSubmit={onSubmit} user={user} />
         </div>
       </div>
