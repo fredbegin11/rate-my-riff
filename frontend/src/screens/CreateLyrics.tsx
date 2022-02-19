@@ -8,8 +8,9 @@ const CreateLyrics = () => {
   const navigate = useNavigate();
 
   const {
-    actions: { createLyrics },
-    selectors: { isCreateLyricsError, isCreateLyricsLoading },
+    actions: {
+      create: { action: createLyrics, isLoading, isError },
+    },
   } = useLyrics();
 
   const onSubmit = async (values: CreateLyricsFormProps) => {
@@ -22,7 +23,7 @@ const CreateLyrics = () => {
   return (
     <Layout>
       <div className="p-16">
-        <CreateLyricsForm form={form} onSubmit={onSubmit} isLoading={isCreateLyricsLoading} isError={isCreateLyricsError} />
+        <CreateLyricsForm form={form} onSubmit={onSubmit} isLoading={isLoading} isError={isError} />
       </div>
     </Layout>
   );

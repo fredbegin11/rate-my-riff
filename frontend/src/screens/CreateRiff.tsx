@@ -9,8 +9,9 @@ const CreateRiff = () => {
   const navigate = useNavigate();
 
   const {
-    actions: { createRiff },
-    selectors: { isCreateRiffError, isCreateRiffLoading },
+    actions: {
+      create: { action: createRiff, isError, isLoading },
+    },
   } = useRiffs();
 
   const {
@@ -28,7 +29,7 @@ const CreateRiff = () => {
   return (
     <Layout>
       <div className="p-16">
-        <CreateRiffForm form={form} onSubmit={onSubmit} isLoading={isCreateRiffLoading} isError={isCreateRiffError} />
+        <CreateRiffForm form={form} onSubmit={onSubmit} isLoading={isLoading} isError={isError} />
       </div>
     </Layout>
   );

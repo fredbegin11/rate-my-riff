@@ -1,5 +1,6 @@
-import { PlusIcon } from '@heroicons/react/outline';
 import { UseFormReturn } from 'react-hook-form';
+import SubmitButton from '../SubmitButton';
+import ErrorMessage from './ErrorMessage';
 
 export interface CreateLyricsFormProps {
   name: string;
@@ -45,17 +46,8 @@ const CreateLyricsForm = ({ form, isError, isLoading, onSubmit }: Props) => {
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="mb-6 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <PlusIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-              </span>
-              Ajouter
-            </button>
-            {!isLoading && isError && <span className="pt-6 text-rose-700">Ça marche pas...</span>}
-            {isLoading && <span className="pt-6">Ça load, sera pas long...</span>}
+            <SubmitButton label="Ajouter" type="Add" isLoading={isLoading} />
+            {!isLoading && isError && <ErrorMessage />}
           </div>
         </form>
       </div>

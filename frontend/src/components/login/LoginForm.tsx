@@ -1,12 +1,13 @@
 import { UseFormReturn } from 'react-hook-form';
-import { LockClosedIcon } from '@heroicons/react/solid';
 import prestone from '../../assets/prestone.png';
+import ErrorMessage from '../form/ErrorMessage';
+import SubmitButton from '../SubmitButton';
 
 interface Props {
   form: UseFormReturn<LoginFormProps, object>;
-  onSubmit: (values: LoginFormProps) => Promise<void>;
+  onSubmit: (values: LoginFormProps) => void;
   isLoading: boolean;
-  error: string;
+  isError: boolean;
 }
 
 export interface LoginFormProps {
@@ -14,7 +15,7 @@ export interface LoginFormProps {
   password: string;
 }
 
-export default function LoginForm({ form, error, isLoading, onSubmit }: Props) {
+export default function LoginForm({ form, isError, isLoading, onSubmit }: Props) {
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -50,17 +51,8 @@ export default function LoginForm({ form, error, isLoading, onSubmit }: Props) {
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="mb-6 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-              </span>
-              Sign in
-            </button>
-            {!isLoading && error && <span className="pt-6 text-rose-700">{error}</span>}
-            {isLoading && <span className="pt-6">Ça load, sera pas long...</span>}
+            <SubmitButton label="S'authentifier" type="Login" isLoading={isLoading} />
+            {!isLoading && isError && <ErrorMessage />}
           </div>
         </form>
       </div>

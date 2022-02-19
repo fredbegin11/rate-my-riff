@@ -6,7 +6,12 @@ import RiffList from '../components/RiffList';
 const Drums = () => {
   const {
     selectors: { data, isLoading },
-    actions: { deleteRiff, addRiffRating, removeComment, addComment },
+    actions: {
+      delete: { action: deleteRiff },
+      addRating: { action: addRating },
+      removeComment: { action: removeComment },
+      addComment: { action: addComment },
+    },
   } = useRiffs('drums');
 
   return (
@@ -24,7 +29,7 @@ const Drums = () => {
           data={data}
           isLoading={isLoading}
           deleteRiff={deleteRiff}
-          addRiffRating={addRiffRating}
+          addRiffRating={addRating}
         />
       </div>
     </Layout>

@@ -10,7 +10,12 @@ import CommentsModal from '../components/CommentsModal';
 const Lyrics = () => {
   const {
     selectors: { data },
-    actions: { deleteLyrics, addLyricsRating, addComment, removeComment },
+    actions: {
+      delete: { action: deleteLyrics },
+      addRating: { action: addRating },
+      addComment: { action: addComment },
+      removeComment: { action: removeComment },
+    },
   } = useLyrics();
 
   const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
@@ -56,7 +61,7 @@ const Lyrics = () => {
               ]}
               key={item.id}
               lyrics={item}
-              addRating={addLyricsRating}
+              addRating={addRating}
             />
           ))}
         </div>

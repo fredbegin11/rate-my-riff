@@ -1,7 +1,8 @@
 import { UseFormReturn } from 'react-hook-form';
-import { SaveIcon } from '@heroicons/react/outline';
 import madness from '../../assets/madness.png';
 import { User } from '../../services/firebaseService';
+import ErrorMessage from './ErrorMessage';
+import SubmitButton from '../SubmitButton';
 
 export interface EditProfileFormProps {
   name: string;
@@ -13,11 +14,11 @@ interface Props {
   form: UseFormReturn<EditProfileFormProps, object>;
   onSubmit: (values: EditProfileFormProps) => Promise<void>;
   isLoading: boolean;
-  error: string;
+  isError: boolean;
   user: User | null;
 }
 
-const EditProfileForm = ({ isLoading, error, form, onSubmit, user }: Props) => {
+const EditProfileForm = ({ isLoading, isError, form, onSubmit, user }: Props) => {
   return (
     <form className="mt-8 space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
       <div className="rounded-md max-w-sm">
@@ -58,18 +59,8 @@ const EditProfileForm = ({ isLoading, error, form, onSubmit, user }: Props) => {
         </div>
 
         <div>
-          <button
-            type="submit"
-            className="mb-6 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-              <SaveIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-            </span>
-            Sauvegarder
-          </button>
-
-          {!isLoading && error && <span className="pt-6 text-rose-700">{error}</span>}
-          {isLoading && <span className="pt-6">Ça load, sera pas long...</span>}
+          <SubmitButton label="Sauvegarder" type="Save" isLoading={isLoading} />
+          {!isLoading && isError && <ErrorMessage />}
         </div>
       </div>
     </form>

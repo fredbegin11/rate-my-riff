@@ -6,7 +6,12 @@ import RiffList from '../components/RiffList';
 const Setlist = () => {
   const {
     selectors: { data, isLoading },
-    actions: { deleteRiff, addRiffRating, removeComment, addComment },
+    actions: {
+      delete: { action: deleteRiff },
+      addRating: { action: addRating },
+      removeComment: { action: removeComment },
+      addComment: { action: addComment },
+    },
   } = useRiffs('fullband');
 
   return (
@@ -24,7 +29,7 @@ const Setlist = () => {
           data={data}
           isLoading={isLoading}
           deleteRiff={deleteRiff}
-          addRiffRating={addRiffRating}
+          addRiffRating={addRating}
         />
       </div>
     </Layout>

@@ -1,9 +1,10 @@
-import { UseMutateFunction, useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { CreateCommentFormProps } from '../components/form/CreateCommentForm';
 import { CreateRiffFormProps } from '../components/form/CreateRiffForm';
 import Instrument from '../models/Instrument';
 import Riff from '../models/Riff';
 import RiffsClient from '../services/RiffsClient';
+import { HookAction } from './HookAction';
 
 export interface AddRatingProps {
   id: string;
@@ -22,28 +23,16 @@ export interface RemoveCommentProps {
 
 interface RiffsHook {
   actions: {
-    deleteRiff: UseMutateFunction<void, unknown, string, unknown>;
-    createRiff: UseMutateFunction<void, unknown, CreateRiffFormProps, unknown>;
-    addRiffRating: UseMutateFunction<void, unknown, AddRatingProps, unknown>;
-    addComment: UseMutateFunction<void, unknown, AddCommentProps, unknown>;
-    removeComment: UseMutateFunction<void, unknown, RemoveCommentProps, unknown>;
+    delete: HookAction;
+    create: HookAction;
+    addRating: HookAction;
+    addComment: HookAction;
+    removeComment: HookAction;
   };
   selectors: {
     data: Riff[];
     isError: boolean;
     isLoading: boolean;
-    isCreateRiffSuccess: boolean;
-    isCreateRiffError: boolean;
-    isCreateRiffLoading: boolean;
-    isAddRiffRatingSuccess: boolean;
-    isAddRiffRatingError: boolean;
-    isAddRiffRatingLoading: boolean;
-    isAddCommentSuccess: boolean;
-    isAddCommentError: boolean;
-    isAddCommentLoading: boolean;
-    isRemoveCommentSuccess: boolean;
-    isRemoveCommentError: boolean;
-    isRemoveCommentLoading: boolean;
   };
 }
 
@@ -51,26 +40,31 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
   const queryClient = useQueryClient();
   const { data = [], isError, isLoading } = useQuery('riffs', () => RiffsClient.getAll());
 
-  const { mutate: deleteRiff } = useMutation('deleteRiff', async (id: string) => {
+  const {
+    mutate: deleteRiff,
+    isError: isDeleteError,
+    isSuccess: isDeleteSuccess,
+    isLoading: isDeleteLoading,
+  } = useMutation('deleteRiff', async (id: string) => {
     await RiffsClient.delete(id);
     queryClient.invalidateQueries('riffs');
   });
 
   const {
-    mutate: createRiff,
-    isSuccess: isCreateRiffSuccess,
-    isError: isCreateRiffError,
-    isLoading: isCreateRiffLoading,
+    mutate: create,
+    isSuccess: isCreateSuccess,
+    isError: isCreateError,
+    isLoading: isCreateLoading,
   } = useMutation('createRiff', async (form: CreateRiffFormProps) => {
     await RiffsClient.create(form);
     queryClient.invalidateQueries('riffs');
   });
 
   const {
-    mutate: addRiffRating,
-    isSuccess: isAddRiffRatingSuccess,
-    isError: isAddRiffRatingError,
-    isLoading: isAddRiffRatingLoading,
+    mutate: addRating,
+    isSuccess: isAddRatingSuccess,
+    isError: isAddRatingError,
+    isLoading: isAddRatingLoading,
   } = useMutation('addRiffRating', async ({ id, rating }: AddRatingProps) => {
     await RiffsClient.addRating(id, rating);
     queryClient.invalidateQueries('riffs');
@@ -97,23 +91,42 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
   });
 
   return {
-    actions: { deleteRiff, createRiff, addRiffRating, addComment, removeComment },
+    actions: {
+      delete: {
+        action: deleteRiff,
+        isError: isDeleteError,
+        isLoading: isDeleteLoading,
+        isSuccess: isDeleteSuccess,
+      },
+      create: {
+        action: create,
+        isError: isCreateError,
+        isLoading: isCreateLoading,
+        isSuccess: isCreateSuccess,
+      },
+      addRating: {
+        action: addRating,
+        isError: isAddRatingError,
+        isLoading: isAddRatingLoading,
+        isSuccess: isAddRatingSuccess,
+      },
+      addComment: {
+        action: addComment,
+        isError: isAddCommentError,
+        isLoading: isAddCommentLoading,
+        isSuccess: isAddCommentSuccess,
+      },
+      removeComment: {
+        action: removeComment,
+        isError: isRemoveCommentError,
+        isLoading: isRemoveCommentLoading,
+        isSuccess: isRemoveCommentSuccess,
+      },
+    },
     selectors: {
       data: data.filter((riff) => riff.instrument === instrument),
       isError,
       isLoading,
-      isCreateRiffSuccess,
-      isCreateRiffError,
-      isCreateRiffLoading,
-      isAddRiffRatingSuccess,
-      isAddRiffRatingError,
-      isAddRiffRatingLoading,
-      isAddCommentSuccess,
-      isAddCommentError,
-      isAddCommentLoading,
-      isRemoveCommentSuccess,
-      isRemoveCommentError,
-      isRemoveCommentLoading,
     },
   };
 };

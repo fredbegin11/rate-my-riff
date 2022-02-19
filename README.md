@@ -6,8 +6,6 @@ Aux grands maux les grands moyens comme on dit.
 
 ## Prochaines étapes de développement
 
-- Favicon + HTML Title
-- RiffList Sorting
 - Photo de profil
 - Gestion du profil
 - Gérer l'accès publique sur invitations

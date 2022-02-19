@@ -1,8 +1,9 @@
-import { UseMutateFunction, useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { CreateCommentFormProps } from '../components/form/CreateCommentForm';
 import { CreateLyricsFormProps } from '../components/form/CreateLyricsForm';
 import Lyrics from '../models/Lyrics';
 import LyricsClient from '../services/LyricsClient';
+import { HookAction } from './HookAction';
 
 export interface AddRatingProps {
   id: string;
@@ -21,28 +22,16 @@ export interface RemoveCommentProps {
 
 interface LyricsHook {
   actions: {
-    deleteLyrics: UseMutateFunction<void, unknown, string, unknown>;
-    createLyrics: UseMutateFunction<void, unknown, CreateLyricsFormProps, unknown>;
-    addLyricsRating: UseMutateFunction<void, unknown, AddRatingProps, unknown>;
-    addComment: UseMutateFunction<void, unknown, AddCommentProps, unknown>;
-    removeComment: UseMutateFunction<void, unknown, RemoveCommentProps, unknown>;
+    delete: HookAction;
+    create: HookAction;
+    addRating: HookAction;
+    addComment: HookAction;
+    removeComment: HookAction;
   };
   selectors: {
     data: Lyrics[];
     isError: boolean;
     isLoading: boolean;
-    isCreateLyricsSuccess: boolean;
-    isCreateLyricsError: boolean;
-    isCreateLyricsLoading: boolean;
-    isAddLyricsRatingSuccess: boolean;
-    isAddLyricsRatingError: boolean;
-    isAddLyricsRatingLoading: boolean;
-    isAddCommentSuccess: boolean;
-    isAddCommentError: boolean;
-    isAddCommentLoading: boolean;
-    isRemoveCommentSuccess: boolean;
-    isRemoveCommentError: boolean;
-    isRemoveCommentLoading: boolean;
   };
 }
 
@@ -50,26 +39,31 @@ const useLyrics = (): LyricsHook => {
   const queryClient = useQueryClient();
   const { data = [], isError, isLoading } = useQuery('lyrics', () => LyricsClient.getAll());
 
-  const { mutate: deleteLyrics } = useMutation('deleteLyrics', async (id: string) => {
+  const {
+    mutate: deleteLyrics,
+    isError: isDeleteError,
+    isSuccess: isDeleteSuccess,
+    isLoading: isDeleteLoading,
+  } = useMutation('deleteLyrics', async (id: string) => {
     await LyricsClient.delete(id);
     queryClient.invalidateQueries('lyrics');
   });
 
   const {
-    mutate: createLyrics,
-    isSuccess: isCreateLyricsSuccess,
-    isError: isCreateLyricsError,
-    isLoading: isCreateLyricsLoading,
+    mutate: create,
+    isSuccess: isCreateSuccess,
+    isError: isCreateError,
+    isLoading: isCreateLoading,
   } = useMutation('createLyrics', async (form: CreateLyricsFormProps) => {
     await LyricsClient.create(form);
     queryClient.invalidateQueries('lyrics');
   });
 
   const {
-    mutate: addLyricsRating,
-    isSuccess: isAddLyricsRatingSuccess,
-    isError: isAddLyricsRatingError,
-    isLoading: isAddLyricsRatingLoading,
+    mutate: addRating,
+    isSuccess: isAddRatingSuccess,
+    isError: isAddRatingError,
+    isLoading: isAddRatingLoading,
   } = useMutation('addLyricsRating', async ({ id, rating }: AddRatingProps) => {
     await LyricsClient.addRating(id, rating);
     queryClient.invalidateQueries('lyrics');
@@ -96,23 +90,42 @@ const useLyrics = (): LyricsHook => {
   });
 
   return {
-    actions: { deleteLyrics, createLyrics, addLyricsRating, addComment, removeComment },
+    actions: {
+      delete: {
+        action: deleteLyrics,
+        isError: isDeleteError,
+        isLoading: isDeleteLoading,
+        isSuccess: isDeleteSuccess,
+      },
+      create: {
+        action: create,
+        isError: isCreateError,
+        isLoading: isCreateLoading,
+        isSuccess: isCreateSuccess,
+      },
+      addRating: {
+        action: addRating,
+        isError: isAddRatingError,
+        isLoading: isAddRatingLoading,
+        isSuccess: isAddRatingSuccess,
+      },
+      addComment: {
+        action: addComment,
+        isError: isAddCommentError,
+        isLoading: isAddCommentLoading,
+        isSuccess: isAddCommentSuccess,
+      },
+      removeComment: {
+        action: removeComment,
+        isError: isRemoveCommentError,
+        isLoading: isRemoveCommentLoading,
+        isSuccess: isRemoveCommentSuccess,
+      },
+    },
     selectors: {
       data,
       isError,
       isLoading,
-      isCreateLyricsSuccess,
-      isCreateLyricsError,
-      isCreateLyricsLoading,
-      isAddLyricsRatingSuccess,
-      isAddLyricsRatingError,
-      isAddLyricsRatingLoading,
-      isAddCommentSuccess,
-      isAddCommentError,
-      isAddCommentLoading,
-      isRemoveCommentSuccess,
-      isRemoveCommentError,
-      isRemoveCommentLoading,
     },
   };
 };
