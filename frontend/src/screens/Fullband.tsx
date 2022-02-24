@@ -18,7 +18,7 @@ const Fullband = () => {
     <Layout>
       <div className="pt-16 xl:p-16">
         <div className="mb-8 flex justify-between">
-          <span className="ml-6 text-2xl font-bold">Setlist</span>
+          <span className="ml-6 text-2xl font-bold">Full Band</span>
           <Link to="/riffs/create" className="mr-6 btn btn-default">
             Ajouter une track
           </Link>

@@ -18,7 +18,7 @@ const Jams = () => {
     <Layout>
       <div className="pt-16 xl:p-16">
         <div className="mb-8 flex justify-between">
-          <span className="ml-6 text-2xl font-bold">Setlist</span>
+          <span className="ml-6 text-2xl font-bold">Jams</span>
           <Link to="/jams/create" className="mr-6 btn btn-default">
             Ajouter un jam
           </Link>
