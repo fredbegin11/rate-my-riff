@@ -1,39 +1,39 @@
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
-import useRiffs from '../hooks/useRiffs';
-import RiffList from '../components/RiffList';
+import JamList from '../components/JamList';
+import useJams from '../hooks/useJams';
 
-const Setlist = () => {
+const Jams = () => {
   const {
     selectors: { data, isLoading },
     actions: {
-      delete: { action: deleteRiff },
+      delete: { action: deleteJam },
       addRating: { action: addRating },
       removeComment: { action: removeComment },
       addComment: { action: addComment },
     },
-  } = useRiffs('fullband');
+  } = useJams();
 
   return (
     <Layout>
       <div className="pt-16 xl:p-16">
         <div className="mb-8 flex justify-between">
           <span className="ml-6 text-2xl font-bold">Setlist</span>
-          <Link to="/riffs/create" className="mr-6 btn btn-default">
-            Ajouter une track
+          <Link to="/jams/create" className="mr-6 btn btn-default">
+            Ajouter un jam
           </Link>
         </div>
-        <RiffList
+        <JamList
           removeComment={removeComment}
           addComment={addComment}
           data={data}
           isLoading={isLoading}
-          deleteRiff={deleteRiff}
-          addRiffRating={addRating}
+          deleteJam={deleteJam}
+          addJamRating={addRating}
         />
       </div>
     </Layout>
   );
 };
 
-export default Setlist;
+export default Jams;

@@ -6,7 +6,7 @@ interface Props {
 
 function Layout({ children }: Props) {
   return (
-    <div className="App">
+    <div className="App bg-slate-100 min-h-screen">
       <Navbar />
       {children}
     </div>

@@ -6,8 +6,6 @@ Aux grands maux les grands moyens comme on dit.
 
 ## Prochaines étapes de développement
 
-- Photo de profil
-- Gestion du profil
 - Gérer l'accès publique sur invitations
 
 ## Nice to have

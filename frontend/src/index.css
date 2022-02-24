@@ -7,11 +7,11 @@
 }
 
 .btn-default {
-  @apply bg-transparent text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 rounded;
+  @apply bg-white text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 rounded;
 }
 
 .btn-default:hover {
-  @apply bg-transparent text-blue-500 border-blue-500;
+  @apply bg-white text-blue-500 border-blue-500;
 }
 
 .btn-danger {

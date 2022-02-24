@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { CreateCommentFormProps } from '../components/form/CreateCommentForm';
-import { CreateLyricsFormProps } from '../components/form/CreateLyricsForm';
-import Lyrics from '../models/Lyrics';
-import LyricsClient from '../services/LyricsClient';
+import { CreateJamFormProps } from '../components/form/CreateJamForm';
+import Jam from '../models/Jam';
+import JamsClient from '../services/JamsClient';
 import { HookAction } from './HookAction';
 
 export interface AddRatingProps {
@@ -20,7 +20,7 @@ export interface RemoveCommentProps {
   commentId: string;
 }
 
-interface LyricsHook {
+interface JamsHook {
   actions: {
     delete: HookAction;
     create: HookAction;
@@ -29,24 +29,24 @@ interface LyricsHook {
     removeComment: HookAction;
   };
   selectors: {
-    data: Lyrics[];
+    data: Jam[];
     isError: boolean;
     isLoading: boolean;
   };
 }
 
-const useLyrics = (): LyricsHook => {
+const useJams = (): JamsHook => {
   const queryClient = useQueryClient();
-  const { data = [], isError, isLoading } = useQuery('lyrics', () => LyricsClient.getAll());
+  const { data = [], isError, isLoading } = useQuery('jams', () => JamsClient.getAll());
 
   const {
-    mutate: deleteLyrics,
+    mutate: deleteJam,
     isError: isDeleteError,
     isSuccess: isDeleteSuccess,
     isLoading: isDeleteLoading,
-  } = useMutation('deleteLyrics', async (id: string) => {
-    await LyricsClient.delete(id);
-    queryClient.invalidateQueries('lyrics');
+  } = useMutation('deleteJam', async (id: string) => {
+    await JamsClient.delete(id);
+    queryClient.invalidateQueries('jams');
   });
 
   const {
@@ -54,9 +54,9 @@ const useLyrics = (): LyricsHook => {
     isSuccess: isCreateSuccess,
     isError: isCreateError,
     isLoading: isCreateLoading,
-  } = useMutation('createLyrics', async (form: CreateLyricsFormProps) => {
-    await LyricsClient.create(form);
-    queryClient.invalidateQueries('lyrics');
+  } = useMutation('createJam', async (form: CreateJamFormProps) => {
+    await JamsClient.create(form);
+    queryClient.invalidateQueries('jams');
   });
 
   const {
@@ -64,9 +64,9 @@ const useLyrics = (): LyricsHook => {
     isSuccess: isAddRatingSuccess,
     isError: isAddRatingError,
     isLoading: isAddRatingLoading,
-  } = useMutation('addLyricsRating', async ({ id, rating }: AddRatingProps) => {
-    await LyricsClient.addRating(id, rating);
-    queryClient.invalidateQueries('lyrics');
+  } = useMutation('addJamRating', async ({ id, rating }: AddRatingProps) => {
+    await JamsClient.addRating(id, rating);
+    queryClient.invalidateQueries('jams');
   });
 
   const {
@@ -75,8 +75,8 @@ const useLyrics = (): LyricsHook => {
     isError: isAddCommentError,
     isLoading: isAddCommentLoading,
   } = useMutation('addComment', async ({ id, form }: AddCommentProps) => {
-    await LyricsClient.addComment(id, form);
-    queryClient.invalidateQueries('lyrics');
+    await JamsClient.addComment(id, form);
+    queryClient.invalidateQueries('jams');
   });
 
   const {
@@ -85,14 +85,14 @@ const useLyrics = (): LyricsHook => {
     isError: isRemoveCommentError,
     isLoading: isRemoveCommentLoading,
   } = useMutation('removeComment', async ({ id, commentId }: RemoveCommentProps) => {
-    await LyricsClient.removeComment(id, commentId);
-    queryClient.invalidateQueries('lyrics');
+    await JamsClient.removeComment(id, commentId);
+    queryClient.invalidateQueries('jams');
   });
 
   return {
     actions: {
       delete: {
-        action: deleteLyrics,
+        action: deleteJam,
         isError: isDeleteError,
         isLoading: isDeleteLoading,
         isSuccess: isDeleteSuccess,
@@ -130,4 +130,4 @@ const useLyrics = (): LyricsHook => {
   };
 };
 
-export default useLyrics;
+export default useJams;

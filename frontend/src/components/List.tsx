@@ -24,22 +24,22 @@ export default function List({ isLoading, data = [], columns, actions = [] }: Pr
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table {...getTableProps()} className="min-w-full divide-y divide-gray-200 border border-gray-200">
-              <thead className="bg-gray-50 border-b">
+            <table {...getTableProps()} className="min-w-full divide-y divide-gray-200 border border-gray-200 bg-white">
+              <thead className="bg-white border-b">
                 {headerGroups.map((headerGroup) => (
                   <tr {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map((column: any) => (
                       <th
                         {...column.getHeaderProps(column.getSortByToggleProps())}
                         scope="col"
-                        className="min-w-96 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="min-w-96 px-4 py-4 text-left text-xs text-gray-500 uppercase tracking-wider"
                       >
                         {column.render('Header')}
                         {column.isSorted && <span>{column.isSortedDesc ? ' ↓' : ' ↑'}</span>}
                       </th>
                     ))}
                     {actions.length > 0 && (
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-right">
+                      <th scope="col" className="px-6 py-4 text-left text-xs text-gray-500 uppercase tracking-wider text-right">
                         Actions
                       </th>
                     )}
@@ -53,7 +53,7 @@ export default function List({ isLoading, data = [], columns, actions = [] }: Pr
                   return (
                     <tr {...row.getRowProps()} className="border-b border-gray-300">
                       {row.cells.map((cell: any) => (
-                        <td {...cell.getCellProps()} className="px-6 py-4 whitespace-nowrap">
+                        <td {...cell.getCellProps()} className="px-4 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">{cell.render('Cell')}</div>
                         </td>
                       ))}
@@ -79,7 +79,7 @@ export default function List({ isLoading, data = [], columns, actions = [] }: Pr
             </table>
 
             {!isLoading && data.length === 0 && (
-              <div className="flex justify-center py-12">
+              <div className="flex justify-center py-12 bg-white">
                 <span className="text-center">Rien à afficher icitte... Enwèye, va composer!</span>
               </div>
             )}

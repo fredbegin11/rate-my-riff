@@ -8,7 +8,9 @@ import Login from './screens/Login';
 import Lyrics from './screens/Lyrics';
 import Profile from './screens/Profile';
 import Riffs from './screens/Riffs';
-import Setlist from './screens/Setlist';
+import Fullband from './screens/Fullband';
+import Jams from './screens/Jams';
+import CreateJam from './screens/CreateJam';
 
 const queryClient = new QueryClient();
 
@@ -23,8 +25,14 @@ function App() {
         <Route path="/riffs/create" element={<PrivateRoute />}>
           <Route path="/riffs/create" element={<CreateRiff />} />
         </Route>
-        <Route path="/setlist" element={<PrivateRoute />}>
-          <Route path="/setlist" element={<Setlist />} />
+        <Route path="/jams" element={<PrivateRoute />}>
+          <Route path="/jams" element={<Jams />} />
+        </Route>
+        <Route path="/jams/create" element={<PrivateRoute />}>
+          <Route path="/jams/create" element={<CreateJam />} />
+        </Route>
+        <Route path="/fullband" element={<PrivateRoute />}>
+          <Route path="/fullband" element={<Fullband />} />
         </Route>
         <Route path="/drums" element={<PrivateRoute />}>
           <Route path="/drums" element={<Drums />} />

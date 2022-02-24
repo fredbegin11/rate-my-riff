@@ -8,12 +8,13 @@ import DateService from '../services/DateService';
 import Lyrics from '../models/Lyrics';
 import { AddCommentProps, RemoveCommentProps } from '../hooks/useLyrics';
 import ProfilePhotoService from '../services/ProfilePhotoService';
+import Jam from '../models/Jam';
 
 interface Props {
   onConfirm: () => void;
   onCancel: () => void;
   visible: boolean;
-  item?: Riff | Lyrics;
+  item?: Riff | Lyrics | Jam;
   addComment: (props: AddCommentProps) => void;
   removeComment: (props: RemoveCommentProps) => void;
 }
@@ -22,7 +23,7 @@ export default function CommentsModal({ onConfirm, onCancel, visible, item, addC
   const form = useForm<CreateCommentFormProps>();
 
   const onSubmit = async (values: CreateCommentFormProps) => {
-    await addComment({ riffId: item!.id, form: values });
+    await addComment({ id: item!.id, form: values });
     form.reset();
   };
 
@@ -77,7 +78,7 @@ export default function CommentsModal({ onConfirm, onCancel, visible, item, addC
                                     <span className="font-sm text-gray-500">{DateService.format(comment.creationDate, 'yyyy/MM/dd HH:mm')}</span>
                                   </div>
                                 </div>
-                                <button className="button" type="button" onClick={() => removeComment({ riffId: item.id, commentId: comment.id })}>
+                                <button className="button" type="button" onClick={() => removeComment({ id: item.id, commentId: comment.id })}>
                                   <TrashIcon width={25} height={25} className="text-rose-700" />
                                 </button>
                               </div>

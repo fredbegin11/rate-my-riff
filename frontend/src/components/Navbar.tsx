@@ -12,7 +12,8 @@ export default function Navbar() {
   const { pathname } = useLocation();
 
   const navigation = [
-    { name: 'Setlist', to: '/setlist', current: pathname === '/setlist' },
+    { name: 'Full Band', to: '/fullband', current: pathname === '/fullband' },
+    { name: 'Jams', to: '/jams', current: pathname === '/jams' },
     { name: 'Riffs', to: '/riffs', current: pathname === '/riffs' },
     { name: 'Drums', to: '/drums', current: pathname === '/drums' },
     { name: 'Lyrics', to: '/lyrics', current: pathname === '/lyrics' },

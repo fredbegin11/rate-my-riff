@@ -12,12 +12,12 @@ export interface AddRatingProps {
 }
 
 export interface AddCommentProps {
-  riffId: string;
+  id: string;
   form: CreateCommentFormProps;
 }
 
 export interface RemoveCommentProps {
-  riffId: string;
+  id: string;
   commentId: string;
 }
 
@@ -75,8 +75,8 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
     isSuccess: isAddCommentSuccess,
     isError: isAddCommentError,
     isLoading: isAddCommentLoading,
-  } = useMutation('addComment', async ({ riffId, form }: AddCommentProps) => {
-    await RiffsClient.addComment(riffId, form);
+  } = useMutation('addComment', async ({ id, form }: AddCommentProps) => {
+    await RiffsClient.addComment(id, form);
     queryClient.invalidateQueries('riffs');
   });
 
@@ -85,8 +85,8 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
     isSuccess: isRemoveCommentSuccess,
     isError: isRemoveCommentError,
     isLoading: isRemoveCommentLoading,
-  } = useMutation('removeComment', async ({ riffId, commentId }: RemoveCommentProps) => {
-    await RiffsClient.removeComment(riffId, commentId);
+  } = useMutation('removeComment', async ({ id, commentId }: RemoveCommentProps) => {
+    await RiffsClient.removeComment(id, commentId);
     queryClient.invalidateQueries('riffs');
   });
 
