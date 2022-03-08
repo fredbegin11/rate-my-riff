@@ -21,7 +21,7 @@ const AudioPlayer = ({ riff }: Props) => {
   }
 
   return (
-    <audio controls>
+    <audio controls preload="none">
       <source src={audioUrl} />
     </audio>
   );

@@ -21,3 +21,23 @@
 .btn-danger:hover {
   @apply bg-transparent text-red-500 border-red-500;
 }
+
+.rhap_container {
+  box-shadow: none !important;
+}
+
+.rhap_additional-controls {
+  display: none !important;
+}
+
+.rhap_volume-controls {
+  display: none !important;
+}
+
+.rhap_controls-section {
+  flex: 1 !important;
+}
+
+.rhap_container {
+  padding: 0 !important;
+}
