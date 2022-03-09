@@ -10,6 +10,7 @@ export interface JamProps {
   creationDate: number;
   url: string;
   comments?: Comment[];
+  hasBeenUsed?: boolean;
 }
 
 class Jam {
@@ -22,6 +23,7 @@ class Jam {
   comments: Comment[];
   averageRating: number;
   myRating: number;
+  hasBeenUsed?: boolean;
 
   constructor(props: JamProps) {
     this.id = props.id;
@@ -38,6 +40,7 @@ class Jam {
 
     this.averageRating = sum / rawRatings.length || 0;
     this.myRating = this.ratings[displayName] || 0;
+    this.hasBeenUsed = props.hasBeenUsed;
   }
 
   getOrderedComments() {

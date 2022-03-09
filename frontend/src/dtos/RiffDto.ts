@@ -9,6 +9,7 @@ interface RiffDto {
   creationDate: number;
   fileName: string;
   instrument: Instrument;
+  hasBeenUsed?: boolean;
 }
 
 export default RiffDto;

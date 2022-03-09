@@ -7,6 +7,7 @@ const Riffs = () => {
   const {
     selectors: { data, isLoading },
     actions: {
+      update: { action: updateRiff },
       delete: { action: deleteRiff },
       addRating: { action: addRating },
       removeComment: { action: removeComment },
@@ -24,6 +25,7 @@ const Riffs = () => {
           </Link>
         </div>
         <RiffList
+          updateRiff={updateRiff}
           addComment={addComment}
           removeComment={removeComment}
           data={data}

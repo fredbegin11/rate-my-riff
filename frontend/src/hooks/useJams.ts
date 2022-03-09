@@ -20,6 +20,11 @@ export interface RemoveCommentProps {
   commentId: string;
 }
 
+export interface UpdateProps {
+  id: string;
+  dataToUpdate: Partial<Jam>;
+}
+
 interface JamsHook {
   actions: {
     delete: HookAction;
@@ -27,6 +32,7 @@ interface JamsHook {
     addRating: HookAction;
     addComment: HookAction;
     removeComment: HookAction;
+    update: HookAction;
   };
   selectors: {
     data: Jam[];
@@ -56,6 +62,16 @@ const useJams = (): JamsHook => {
     isLoading: isCreateLoading,
   } = useMutation('createJam', async (form: CreateJamFormProps) => {
     await JamsClient.create(form);
+    await queryClient.invalidateQueries('jams');
+  });
+
+  const {
+    mutate: update,
+    isSuccess: isUpdateSuccess,
+    isError: isUpdateError,
+    isLoading: isUpdateLoading,
+  } = useMutation('update', async ({ id, dataToUpdate }: UpdateProps) => {
+    await JamsClient.update(id, dataToUpdate);
     await queryClient.invalidateQueries('jams');
   });
 
@@ -120,6 +136,12 @@ const useJams = (): JamsHook => {
         isError: isRemoveCommentError,
         isLoading: isRemoveCommentLoading,
         isSuccess: isRemoveCommentSuccess,
+      },
+      update: {
+        action: update,
+        isSuccess: isUpdateSuccess,
+        isError: isUpdateError,
+        isLoading: isUpdateLoading,
       },
     },
     selectors: {

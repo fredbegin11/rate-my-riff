@@ -28,6 +28,7 @@ class JamAssembler {
       author: jam.author,
       creationDate: jam.creationDate,
       url: jam.url,
+      hasBeenUsed: jam.hasBeenUsed,
     };
   }
 }

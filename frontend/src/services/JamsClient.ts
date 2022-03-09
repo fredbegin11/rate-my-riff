@@ -35,6 +35,10 @@ class JamsClient {
   removeComment = (jamId: string, commentId: string) => {
     return PersistenceClient.deleteData(`jams/${jamId}/comments/${commentId}`);
   };
+
+  update = (jamId: string, data: Partial<Jam>) => {
+    return PersistenceClient.updateData(`jams/${jamId}`, data);
+  };
 }
 
 export default new JamsClient();

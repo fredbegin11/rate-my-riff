@@ -7,6 +7,7 @@ const Fullband = () => {
   const {
     selectors: { data, isLoading },
     actions: {
+      update: { action: updateRiff },
       delete: { action: deleteRiff },
       addRating: { action: addRating },
       removeComment: { action: removeComment },
@@ -24,6 +25,7 @@ const Fullband = () => {
           </Link>
         </div>
         <RiffList
+          updateRiff={updateRiff}
           removeComment={removeComment}
           addComment={addComment}
           data={data}

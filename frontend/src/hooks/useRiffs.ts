@@ -21,6 +21,11 @@ export interface RemoveCommentProps {
   commentId: string;
 }
 
+export interface UpdateProps {
+  id: string;
+  dataToUpdate: Partial<Riff>;
+}
+
 interface RiffsHook {
   actions: {
     delete: HookAction;
@@ -28,6 +33,7 @@ interface RiffsHook {
     addRating: HookAction;
     addComment: HookAction;
     removeComment: HookAction;
+    update: HookAction;
   };
   selectors: {
     data: Riff[];
@@ -60,6 +66,16 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
     await RiffsClient.create(form);
     await queryClient.invalidateQueries('riffs');
     queryClient.clear();
+  });
+
+  const {
+    mutate: update,
+    isSuccess: isUpdateSuccess,
+    isError: isUpdateError,
+    isLoading: isUpdateLoading,
+  } = useMutation('update', async ({ id, dataToUpdate }: UpdateProps) => {
+    await RiffsClient.update(id, dataToUpdate);
+    await queryClient.invalidateQueries('riffs');
   });
 
   const {
@@ -123,6 +139,12 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
         isError: isRemoveCommentError,
         isLoading: isRemoveCommentLoading,
         isSuccess: isRemoveCommentSuccess,
+      },
+      update: {
+        action: update,
+        isSuccess: isUpdateSuccess,
+        isError: isUpdateError,
+        isLoading: isUpdateLoading,
       },
     },
     selectors: {

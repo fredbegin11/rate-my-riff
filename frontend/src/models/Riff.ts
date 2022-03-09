@@ -13,6 +13,7 @@ export interface RiffProps {
   fileName: string;
   instrument: Instrument;
   comments?: Comment[];
+  hasBeenUsed?: boolean;
 }
 
 class Riff {
@@ -27,6 +28,7 @@ class Riff {
   comments: Comment[];
   averageRating: number;
   myRating: number;
+  hasBeenUsed?: boolean;
 
   constructor(props: RiffProps) {
     this.id = props.id;
@@ -44,6 +46,7 @@ class Riff {
 
     this.averageRating = sum / rawRatings.length || 0;
     this.myRating = this.ratings[displayName] || 0;
+    this.hasBeenUsed = props.hasBeenUsed;
   }
 
   async getUrl() {

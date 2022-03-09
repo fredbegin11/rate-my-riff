@@ -32,6 +32,7 @@ class RiffAssembler {
       creationDate: riff.creationDate,
       fileName: riff.fileName,
       instrument: riff.instrument,
+      hasBeenUsed: riff.hasBeenUsed,
     };
   }
 }

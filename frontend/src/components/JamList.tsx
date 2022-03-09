@@ -10,7 +10,7 @@ import ratingFull from '../assets/rating_full.svg';
 import ratingEmpty from '../assets/rating_empty.svg';
 import DateService from '../services/DateService';
 import CommentsModal from './CommentsModal';
-import { AddCommentProps, AddRatingProps, RemoveCommentProps } from '../hooks/useJams';
+import { AddCommentProps, AddRatingProps, RemoveCommentProps, UpdateProps } from '../hooks/useJams';
 
 const renderMyRating = (jam: Jam, onClick: (props: AddRatingProps) => void) => (
   <Rating
@@ -29,9 +29,10 @@ interface Props {
   data: Jam[];
   isLoading: boolean;
   deleteJam: (id: string) => void;
+  updateJam: UseMutateFunction<void, unknown, UpdateProps, unknown>;
 }
 
-const JamList = ({ deleteJam, addJamRating, data, isLoading, addComment, removeComment }: Props) => {
+const JamList = ({ deleteJam, addJamRating, updateJam, data, isLoading, addComment, removeComment }: Props) => {
   const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
   const [itemToComment, setItemToComment] = useState<string | undefined>(undefined);
   const [itemToDelete, setItemToDelete] = useState<string | undefined>(undefined);
@@ -48,6 +49,17 @@ const JamList = ({ deleteJam, addJamRating, data, isLoading, addComment, removeC
 
   const columns = useMemo(
     () => [
+      {
+        accessor: 'hasBeenUsed',
+        Header: 'Utilisé',
+        Cell: ({ row, value }: Cell) => {
+          const jam = row.original as Jam;
+
+          return (
+            <input type="checkbox" checked={value} onChange={(e) => updateJam({ id: jam.id, dataToUpdate: { hasBeenUsed: e.target.checked } })} />
+          );
+        },
+      },
       {
         accessor: 'name',
         Header: 'Nom',

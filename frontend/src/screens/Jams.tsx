@@ -7,6 +7,7 @@ const Jams = () => {
   const {
     selectors: { data, isLoading },
     actions: {
+      update: { action: updateJam },
       delete: { action: deleteJam },
       addRating: { action: addRating },
       removeComment: { action: removeComment },
@@ -24,6 +25,7 @@ const Jams = () => {
           </Link>
         </div>
         <JamList
+          updateJam={updateJam}
           removeComment={removeComment}
           addComment={addComment}
           data={data}

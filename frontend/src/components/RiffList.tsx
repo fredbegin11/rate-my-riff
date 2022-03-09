@@ -11,7 +11,7 @@ import ratingFull from '../assets/rating_full.svg';
 import ratingEmpty from '../assets/rating_empty.svg';
 import DateService from '../services/DateService';
 import CommentsModal from './CommentsModal';
-import { AddCommentProps, AddRatingProps, RemoveCommentProps } from '../hooks/useRiffs';
+import { AddCommentProps, AddRatingProps, RemoveCommentProps, UpdateProps } from '../hooks/useRiffs';
 
 const renderMyRating = (riff: Riff, onClick: (props: AddRatingProps) => void) => (
   <Rating
@@ -30,9 +30,10 @@ interface Props {
   data: Riff[];
   isLoading: boolean;
   deleteRiff: (id: string) => void;
+  updateRiff: UseMutateFunction<void, unknown, UpdateProps, unknown>;
 }
 
-const RiffList = ({ deleteRiff, addRiffRating, data, isLoading, addComment, removeComment }: Props) => {
+const RiffList = ({ deleteRiff, addRiffRating, data, isLoading, addComment, removeComment, updateRiff }: Props) => {
   const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
   const [itemToComment, setItemToComment] = useState<string | undefined>(undefined);
   const [itemToDelete, setItemToDelete] = useState<string | undefined>(undefined);
@@ -49,6 +50,17 @@ const RiffList = ({ deleteRiff, addRiffRating, data, isLoading, addComment, remo
 
   const columns = useMemo(
     () => [
+      {
+        accessor: 'hasBeenUsed',
+        Header: 'Utilisé',
+        Cell: ({ row, value }: Cell) => {
+          const riff = row.original as Riff;
+
+          return (
+            <input type="checkbox" checked={value} onChange={(e) => updateRiff({ id: riff.id, dataToUpdate: { hasBeenUsed: e.target.checked } })} />
+          );
+        },
+      },
       {
         accessor: 'fileName',
         Header: 'Audio',

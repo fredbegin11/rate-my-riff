@@ -35,6 +35,10 @@ class RiffsClient {
   removeComment = (riffId: string, commentId: string) => {
     return PersistenceClient.deleteData(`riffs/${riffId}/comments/${commentId}`);
   };
+
+  update = (riffId: string, data: Partial<Riff>) => {
+    return PersistenceClient.updateData(`riffs/${riffId}`, data);
+  };
 }
 
 export default new RiffsClient();

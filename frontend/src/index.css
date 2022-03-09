@@ -41,3 +41,7 @@
 .rhap_container {
   padding: 0 !important;
 }
+
+input[type='checkbox'] {
+  @apply h-6 w-6 rounded;
+}

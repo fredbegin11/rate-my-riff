@@ -7,6 +7,7 @@ interface JamDto {
   author: string;
   creationDate: number;
   url: string;
+  hasBeenUsed?: boolean;
 }
 
 export default JamDto;

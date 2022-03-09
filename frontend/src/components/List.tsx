@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useTable, useSortBy, Cell } from 'react-table';
 import Action from '../models/Action';
 import ListLoading from './ListLoading';
@@ -52,7 +53,13 @@ export default function List({ isLoading, data = [], columns, actions = [] }: Pr
                   prepareRow(row);
 
                   return (
-                    <tr {...row.getRowProps()} className="border-b border-gray-300">
+                    <tr
+                      {...row.getRowProps()}
+                      className={classNames('border-b border-gray-300', {
+                        'opacity-50': !!row.original.hasBeenUsed,
+                        'bg-gray-200': !!row.original.hasBeenUsed,
+                      })}
+                    >
                       {row.cells.map((cell: any) => (
                         <td {...cell.getCellProps()} className="px-4 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">{cell.render('Cell')}</div>
