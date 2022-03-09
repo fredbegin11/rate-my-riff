@@ -17,7 +17,8 @@ interface Props {
 }
 
 export default function List({ isLoading, data = [], columns, actions = [] }: Props) {
-  const { rows, prepareRow, headerGroups, getTableProps, getTableBodyProps } = useTable({ columns, data }, useSortBy);
+  // @ts-ignore
+  const { rows, prepareRow, headerGroups, getTableProps, getTableBodyProps } = useTable({ columns, data, autoResetSortBy: false }, useSortBy);
 
   return (
     <div className="flex flex-col">

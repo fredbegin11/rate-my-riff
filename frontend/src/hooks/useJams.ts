@@ -46,7 +46,7 @@ const useJams = (): JamsHook => {
     isLoading: isDeleteLoading,
   } = useMutation('deleteJam', async (id: string) => {
     await JamsClient.delete(id);
-    queryClient.invalidateQueries('jams');
+    await queryClient.invalidateQueries('jams');
   });
 
   const {
@@ -56,7 +56,7 @@ const useJams = (): JamsHook => {
     isLoading: isCreateLoading,
   } = useMutation('createJam', async (form: CreateJamFormProps) => {
     await JamsClient.create(form);
-    queryClient.invalidateQueries('jams');
+    await queryClient.invalidateQueries('jams');
   });
 
   const {
@@ -66,7 +66,7 @@ const useJams = (): JamsHook => {
     isLoading: isAddRatingLoading,
   } = useMutation('addJamRating', async ({ id, rating }: AddRatingProps) => {
     await JamsClient.addRating(id, rating);
-    queryClient.invalidateQueries('jams');
+    await queryClient.invalidateQueries('jams');
   });
 
   const {
@@ -76,7 +76,7 @@ const useJams = (): JamsHook => {
     isLoading: isAddCommentLoading,
   } = useMutation('addComment', async ({ id, form }: AddCommentProps) => {
     await JamsClient.addComment(id, form);
-    queryClient.invalidateQueries('jams');
+    await queryClient.invalidateQueries('jams');
   });
 
   const {
@@ -86,7 +86,7 @@ const useJams = (): JamsHook => {
     isLoading: isRemoveCommentLoading,
   } = useMutation('removeComment', async ({ id, commentId }: RemoveCommentProps) => {
     await JamsClient.removeComment(id, commentId);
-    queryClient.invalidateQueries('jams');
+    await queryClient.invalidateQueries('jams');
   });
 
   return {

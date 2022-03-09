@@ -50,7 +50,7 @@ const useAuth = (props: Props = {}): AuthHook => {
       await updateProfile(user, { displayName: values.name });
     }
 
-    queryClient.invalidateQueries('currentUser');
+    await queryClient.invalidateQueries('currentUser');
   });
 
   return {

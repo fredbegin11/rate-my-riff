@@ -46,7 +46,7 @@ const useLyrics = (): LyricsHook => {
     isLoading: isDeleteLoading,
   } = useMutation('deleteLyrics', async (id: string) => {
     await LyricsClient.delete(id);
-    queryClient.invalidateQueries('lyrics');
+    await queryClient.invalidateQueries('lyrics');
   });
 
   const {
@@ -56,7 +56,7 @@ const useLyrics = (): LyricsHook => {
     isLoading: isCreateLoading,
   } = useMutation('createLyrics', async (form: CreateLyricsFormProps) => {
     await LyricsClient.create(form);
-    queryClient.invalidateQueries('lyrics');
+    await queryClient.invalidateQueries('lyrics');
   });
 
   const {
@@ -66,7 +66,7 @@ const useLyrics = (): LyricsHook => {
     isLoading: isAddRatingLoading,
   } = useMutation('addLyricsRating', async ({ id, rating }: AddRatingProps) => {
     await LyricsClient.addRating(id, rating);
-    queryClient.invalidateQueries('lyrics');
+    await queryClient.invalidateQueries('lyrics');
   });
 
   const {
@@ -76,7 +76,7 @@ const useLyrics = (): LyricsHook => {
     isLoading: isAddCommentLoading,
   } = useMutation('addComment', async ({ id, form }: AddCommentProps) => {
     await LyricsClient.addComment(id, form);
-    queryClient.invalidateQueries('lyrics');
+    await queryClient.invalidateQueries('lyrics');
   });
 
   const {
@@ -86,7 +86,7 @@ const useLyrics = (): LyricsHook => {
     isLoading: isRemoveCommentLoading,
   } = useMutation('removeComment', async ({ id, commentId }: RemoveCommentProps) => {
     await LyricsClient.removeComment(id, commentId);
-    queryClient.invalidateQueries('lyrics');
+    await queryClient.invalidateQueries('lyrics');
   });
 
   return {

@@ -38,7 +38,7 @@ interface RiffsHook {
 
 const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
   const queryClient = useQueryClient();
-  const { data = [], isError, isLoading } = useQuery('riffs', () => RiffsClient.getAll());
+  const { data = [], isError, isLoading } = useQuery('riffs', RiffsClient.getAll);
 
   const {
     mutate: deleteRiff,
@@ -47,7 +47,8 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
     isLoading: isDeleteLoading,
   } = useMutation('deleteRiff', async (id: string) => {
     await RiffsClient.delete(id);
-    queryClient.invalidateQueries('riffs');
+    await queryClient.invalidateQueries('riffs');
+    queryClient.clear();
   });
 
   const {
@@ -57,7 +58,8 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
     isLoading: isCreateLoading,
   } = useMutation('createRiff', async (form: CreateRiffFormProps) => {
     await RiffsClient.create(form);
-    queryClient.invalidateQueries('riffs');
+    await queryClient.invalidateQueries('riffs');
+    queryClient.clear();
   });
 
   const {
@@ -67,7 +69,7 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
     isLoading: isAddRatingLoading,
   } = useMutation('addRiffRating', async ({ id, rating }: AddRatingProps) => {
     await RiffsClient.addRating(id, rating);
-    queryClient.invalidateQueries('riffs');
+    await queryClient.invalidateQueries('riffs');
   });
 
   const {
@@ -77,7 +79,7 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
     isLoading: isAddCommentLoading,
   } = useMutation('addComment', async ({ id, form }: AddCommentProps) => {
     await RiffsClient.addComment(id, form);
-    queryClient.invalidateQueries('riffs');
+    await queryClient.invalidateQueries('riffs');
   });
 
   const {
@@ -87,7 +89,7 @@ const useRiffs = (instrument: Instrument = 'strings'): RiffsHook => {
     isLoading: isRemoveCommentLoading,
   } = useMutation('removeComment', async ({ id, commentId }: RemoveCommentProps) => {
     await RiffsClient.removeComment(id, commentId);
-    queryClient.invalidateQueries('riffs');
+    await queryClient.invalidateQueries('riffs');
   });
 
   return {
