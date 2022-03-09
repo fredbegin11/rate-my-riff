@@ -16,6 +16,7 @@ class RiffAssembler {
       creationDate: Date.now(),
       fileName,
       instrument,
+      hasBeenUsed: false,
     });
   }
 
