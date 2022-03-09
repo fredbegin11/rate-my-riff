@@ -41,7 +41,7 @@ export default function List({ isLoading, data = [], columns, actions = [] }: Pr
                       </th>
                     ))}
                     {actions.length > 0 && (
-                      <th scope="col" className="px-6 py-4 text-left text-xs text-gray-500 uppercase tracking-wider text-right">
+                      <th scope="col" className="px-6 py-4 text-xs text-gray-500 uppercase tracking-wider text-right">
                         Actions
                       </th>
                     )}
