@@ -13,6 +13,7 @@ class JamAssembler {
       author: AuthClient.getCurrentUserDisplayName(),
       creationDate: Date.now(),
       url,
+      hasBeenUsed: false,
     });
   }
 
